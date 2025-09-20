@@ -1,0 +1,285 @@
+/* 任務儀表板樣式 */
+.task-dashboard {
+  background: var(--card-background);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+
+.task-dashboard:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 儀表板頭部 */
+.dashboard-header {
+  margin-bottom: 24px;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* 關鍵指標網格 */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.metric-card {
+  background: var(--background-color);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.metric-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.metric-icon.total {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.metric-icon.running {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.metric-icon.completed {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+}
+
+.metric-icon.success {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: white;
+}
+
+.metric-content {
+  flex: 1;
+}
+
+.metric-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.metric-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* 圖表網格 */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+.chart-card {
+  background: var(--background-color);
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.chart-container {
+  width: 100%;
+  height: 300px;
+  position: relative;
+}
+
+/* 載入狀態 */
+.dashboard-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .task-dashboard {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .metric-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .metric-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .metric-value {
+    font-size: 20px;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+
+  .dashboard-loading {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .chart-container {
+    height: 200px;
+  }
+}
+
+/* 暗色主題支持 */
+@media (prefers-color-scheme: dark) {
+  .task-dashboard {
+    background: var(--card-background-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .task-dashboard:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  }
+
+  .dashboard-header h2 {
+    color: var(--text-primary-dark);
+  }
+
+  .metric-card {
+    background: var(--card-background-dark);
+    border-color: var(--border-color-dark);
+  }
+
+  .metric-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .metric-value {
+    color: var(--text-primary-dark);
+  }
+
+  .metric-label {
+    color: var(--text-secondary-dark);
+  }
+
+  .chart-card {
+    background: var(--card-background-dark);
+    border-color: var(--border-color-dark);
+  }
+
+  .dashboard-loading {
+    color: var(--text-secondary-dark);
+  }
+
+  .loading-spinner {
+    border: 4px solid var(--border-color-dark);
+    border-top: 4px solid var(--primary-color-dark);
+  }
+}
+
+/* 自定義暗色主題類 */
+.tasks-page.dark .task-dashboard {
+  background: var(--card-background-dark);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tasks-page.dark .task-dashboard:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.tasks-page.dark .dashboard-header h2 {
+  color: var(--text-primary-dark);
+}
+
+.tasks-page.dark .metric-card {
+  background: var(--card-background-dark);
+  border-color: var(--border-color-dark);
+}
+
+.tasks-page.dark .metric-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.tasks-page.dark .metric-value {
+  color: var(--text-primary-dark);
+}
+
+.tasks-page.dark .metric-label {
+  color: var(--text-secondary-dark);
+}
+
+.tasks-page.dark .chart-card {
+  background: var(--card-background-dark);
+  border-color: var(--border-color-dark);
+}
+
+.tasks-page.dark .dashboard-loading {
+  color: var(--text-secondary-dark);
+}
+
+.tasks-page.dark .loading-spinner {
+  border: 4px solid var(--border-color-dark);
+  border-top: 4px solid var(--primary-color-dark);
+}

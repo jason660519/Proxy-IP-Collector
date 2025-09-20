@@ -1,0 +1,229 @@
+/* 任務圖表組件樣式 */
+.task-charts-container {
+  background: var(--card-background);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+
+.task-charts-container:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 圖表頭部 */
+.charts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.charts-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* 圖表標籤頁 */
+.chart-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.chart-tab {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.chart-tab:hover {
+  background: var(--hover-background);
+  color: var(--text-primary);
+}
+
+.chart-tab.active {
+  color: var(--primary-color);
+  background: var(--primary-color-light);
+}
+
+.chart-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary-color);
+}
+
+/* 圖表內容 */
+.charts-content {
+  padding: 24px;
+}
+
+.task-charts {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  margin-bottom: 0;
+}
+
+.chart-container {
+  width: 100%;
+  height: 400px;
+  position: relative;
+}
+
+/* 載入狀態 */
+.charts-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .task-charts {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .chart-container {
+    height: 300px;
+  }
+
+  .charts-loading {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-container {
+    height: 250px;
+  }
+
+  .charts-loading {
+    height: 250px;
+  }
+}
+
+/* 暗色主題支持 */
+@media (prefers-color-scheme: dark) {
+  .task-charts-container {
+    background: var(--card-background-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .task-charts-container:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  }
+
+  .charts-header {
+    border-bottom-color: var(--border-color-dark);
+  }
+
+  .charts-header h2 {
+    color: var(--text-primary-dark);
+  }
+
+  .chart-tab {
+    color: var(--text-secondary-dark);
+  }
+
+  .chart-tab:hover {
+    background: var(--hover-background-dark);
+    color: var(--text-primary-dark);
+  }
+
+  .chart-tab.active {
+    color: var(--primary-color-dark);
+    background: var(--primary-color-light-dark);
+  }
+
+  .chart-tab.active::after {
+    background: var(--primary-color-dark);
+  }
+
+  .charts-loading {
+    color: var(--text-secondary-dark);
+  }
+
+  .loading-spinner {
+    border: 4px solid var(--border-color-dark);
+    border-top: 4px solid var(--primary-color-dark);
+  }
+}
+
+/* 自定義暗色主題類 */
+.tasks-page.dark .task-charts-container {
+  background: var(--card-background-dark);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tasks-page.dark .task-charts-container:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.tasks-page.dark .charts-header {
+  border-bottom-color: var(--border-color-dark);
+}
+
+.tasks-page.dark .charts-header h2 {
+  color: var(--text-primary-dark);
+}
+
+.tasks-page.dark .chart-tab {
+  color: var(--text-secondary-dark);
+}
+
+.tasks-page.dark .chart-tab:hover {
+  background: var(--hover-background-dark);
+  color: var(--text-primary-dark);
+}
+
+.tasks-page.dark .chart-tab.active {
+  color: var(--primary-color-dark);
+  background: var(--primary-color-light-dark);
+}
+
+.tasks-page.dark .chart-tab.active::after {
+  background: var(--primary-color-dark);
+}
+
+.tasks-page.dark .charts-loading {
+  color: var(--text-secondary-dark);
+}
+
+.tasks-page.dark .loading-spinner {
+  border: 4px solid var(--border-color-dark);
+  border-top: 4px solid var(--primary-color-dark);
+}

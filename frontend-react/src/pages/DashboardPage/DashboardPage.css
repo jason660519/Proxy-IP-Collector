@@ -1,0 +1,95 @@
+/**
+ * 儀表板頁面樣式
+ */
+
+.dashboard-page {
+  padding: 16px;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+/* 統計卡片區域 */
+.stat-cards-row {
+  margin-bottom: 16px;
+}
+
+/* 圖表區域 */
+.charts-row {
+  margin-bottom: 16px;
+}
+
+.chart-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card .ant-card-body {
+  padding: 16px;
+}
+
+/* 表格區域 */
+.tables-row {
+  margin-bottom: 16px;
+}
+
+.recent-proxies-card,
+.recent-tasks-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recent-proxies-card .ant-card-head,
+.recent-tasks-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .dashboard-page {
+    padding: 8px;
+  }
+  
+  .stat-cards-row {
+    margin-bottom: 8px;
+  }
+  
+  .charts-row {
+    margin-bottom: 8px;
+  }
+  
+  .tables-row {
+    margin-bottom: 8px;
+  }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .dashboard-page {
+    background-color: #141414;
+  }
+  
+  .chart-card,
+  .recent-proxies-card,
+  .recent-tasks-card {
+    background-color: #1f1f1f;
+    border-color: #303030;
+  }
+}
+
+/* 動畫效果 */
+.stat-cards-row .ant-col,
+.charts-row .ant-col,
+.tables-row .ant-col {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

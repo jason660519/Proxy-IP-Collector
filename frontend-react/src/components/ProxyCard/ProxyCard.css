@@ -1,0 +1,389 @@
+/** 代理卡片組件樣式 */
+
+.proxy-card {
+  margin-bottom: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-color: var(--color-bg-elevated);
+}
+
+.proxy-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.proxy-card.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-bg);
+}
+
+.proxy-card .ant-card-body {
+  padding: 0;
+}
+
+.proxy-card .ant-card-actions {
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-bg-layout);
+}
+
+.proxy-card .ant-card-actions > li {
+  margin: 0;
+}
+
+.proxy-card .ant-card-actions > li:not(:last-child) {
+  border-right: 1px solid var(--color-border);
+}
+
+/* 卡片頭部 */
+.proxy-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg-layout);
+}
+
+.proxy-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.proxy-ip {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.proxy-port {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.proxy-status {
+  display: flex;
+  align-items: center;
+}
+
+/* 卡片內容 */
+.proxy-card-body {
+  padding: 16px;
+}
+
+.proxy-card-body .label {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  margin-right: 8px;
+}
+
+.proxy-card-body .value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* 代理類型 */
+.proxy-type {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* 響應時間 */
+.proxy-response-time {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* 位置信息 */
+.proxy-location {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.flag-icon {
+  width: 16px;
+  height: 12px;
+  border-radius: 2px;
+  object-fit: cover;
+  border: 1px solid var(--color-border);
+}
+
+/* 成功率 */
+.proxy-success-rate {
+  margin-bottom: 8px;
+}
+
+.success-rate-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.proxy-success-rate .ant-progress-line {
+  margin-bottom: 0;
+}
+
+/* 使用次數 */
+.proxy-usage {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* 最後檢查時間 */
+.proxy-last-checked {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* 標籤 */
+.proxy-tags {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tags-container .ant-tag {
+  margin: 0;
+}
+
+/* 匿名級別 */
+.proxy-anonymity {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* 卡片底部 */
+.proxy-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-bg-layout);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.proxy-id {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.rotating-indicator {
+  color: var(--color-primary);
+  font-size: 10px;
+  font-weight: 500;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* 網格布局 */
+.proxies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* 響應式設計 */
+@media (max-width: 1200px) {
+  .proxies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .proxies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .proxy-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .proxy-info {
+    width: 100%;
+  }
+
+  .proxy-card-body .label {
+    min-width: 60px;
+    display: inline-block;
+  }
+
+  .proxy-tags {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tags-container {
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .proxy-card {
+    margin-bottom: 12px;
+  }
+
+  .proxy-card-header {
+    padding: 12px;
+  }
+
+  .proxy-card-body {
+    padding: 12px;
+  }
+
+  .proxy-card-footer {
+    padding: 8px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .proxy-card .ant-card-actions {
+    padding: 0;
+  }
+
+  .proxy-card .ant-card-actions > li {
+    padding: 8px 0;
+  }
+
+  .proxy-card .ant-card-actions > li > span {
+    font-size: 12px;
+  }
+}
+
+/* 深色模式適配 */
+@media (prefers-color-scheme: dark) {
+  .proxy-card {
+    background-color: #1f1f1f;
+    border-color: #303030;
+  }
+
+  .proxy-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .proxy-card-header,
+  .proxy-card-footer {
+    background-color: #141414;
+    border-color: #303030;
+  }
+
+  .proxy-card .ant-card-actions {
+    background-color: #141414;
+    border-color: #303030;
+  }
+
+  .proxy-card .ant-card-actions > li:not(:last-child) {
+    border-color: #303030;
+  }
+
+  .flag-icon {
+    border-color: #303030;
+  }
+}
+
+/* 動畫效果 */
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.proxy-card {
+  animation: cardEnter 0.3s ease-out;
+}
+
+/* 選中狀態動畫 */
+.proxy-card.selected::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+  pointer-events: none;
+  animation: selectedPulse 2s infinite;
+}
+
+@keyframes selectedPulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* 性能指示器 */
+.performance-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: performancePulse 1s infinite;
+}
+
+.performance-indicator.excellent {
+  background-color: #52c41a;
+  animation-duration: 0.8s;
+}
+
+.performance-indicator.good {
+  background-color: #faad14;
+  animation-duration: 1.2s;
+}
+
+.performance-indicator.poor {
+  background-color: #ff4d4f;
+  animation-duration: 1.8s;
+}
+
+@keyframes performancePulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}

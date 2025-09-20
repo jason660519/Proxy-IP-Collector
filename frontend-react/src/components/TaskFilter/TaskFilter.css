@@ -1,0 +1,166 @@
+/* 任務過濾器組件樣式 */
+
+.task-filter {
+  margin-bottom: 24px;
+  padding: 20px;
+  background-color: var(--card-bg, #fff);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 150px;
+  flex: 1;
+}
+
+.filter-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color, #333);
+  margin: 0;
+}
+
+.filter-input,
+.filter-select {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color, #d9d9d9);
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: var(--input-bg, #fff);
+  color: var(--text-color, #333);
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary-color, #1890ff);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+}
+
+.filter-input::placeholder {
+  color: var(--text-secondary, #999);
+}
+
+.filter-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  padding-right: 32px;
+}
+
+.filter-select:disabled {
+  background-color: var(--disabled-bg, #f5f5f5);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: flex-end;
+  min-width: auto;
+  flex: 0;
+}
+
+.filter-actions .button {
+  height: 40px;
+  padding: 0 16px;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .task-filter {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .filter-group {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .filter-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .filter-actions .button {
+    width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .task-filter {
+    padding: 12px;
+  }
+  
+  .filter-row {
+    gap: 12px;
+  }
+  
+  .filter-group label {
+    font-size: 13px;
+  }
+  
+  .filter-input,
+  .filter-select {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+}
+
+/* 暗色主題支持 */
+@media (prefers-color-scheme: dark) {
+  .task-filter {
+    background-color: var(--dark-card-bg, #1f1f1f);
+    border-color: var(--dark-border-color, #303030);
+  }
+  
+  .filter-group label {
+    color: var(--dark-text-color, #e8e8e8);
+  }
+  
+  .filter-input,
+  .filter-select {
+    background-color: var(--dark-input-bg, #1f1f1f);
+    border-color: var(--dark-border-color, #434343);
+    color: var(--dark-text-color, #e8e8e8);
+  }
+  
+  .filter-input:focus,
+  .filter-select:focus {
+    border-color: var(--primary-color, #1890ff);
+  }
+  
+  .filter-input::placeholder {
+    color: var(--dark-text-secondary, #8c8c8c);
+  }
+  
+  .filter-select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e8e8e8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  }
+  
+  .filter-select:disabled {
+    background-color: var(--dark-disabled-bg, #141414);
+  }
+}

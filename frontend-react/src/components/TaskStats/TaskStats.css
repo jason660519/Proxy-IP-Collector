@@ -1,0 +1,162 @@
+/* 任務統計組件樣式 */
+
+.tasks-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card-loading {
+  cursor: default;
+}
+
+.stat-card-loading:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-color, #333);
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.stat-number.running {
+  color: var(--primary-color, #1890ff);
+}
+
+.stat-number.completed {
+  color: var(--success-color, #52c41a);
+}
+
+.stat-number.failed {
+  color: var(--danger-color, #ff4d4f);
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-secondary, #999);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* 加載動畫 */
+.stat-number-loading {
+  height: 32px;
+  width: 60px;
+  background: linear-gradient(90deg, #f0f0f0 25%, transparent 37%, #f0f0f0 63%);
+  background-size: 400% 100%;
+  animation: loading 1.4s ease infinite;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+
+.stat-label-loading {
+  height: 14px;
+  width: 80px;
+  background: linear-gradient(90deg, #f0f0f0 25%, transparent 37%, #f0f0f0 63%);
+  background-size: 400% 100%;
+  animation: loading 1.4s ease infinite;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .tasks-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .stat-card {
+    padding: 16px;
+  }
+  
+  .stat-number {
+    font-size: 28px;
+  }
+  
+  .stat-label {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tasks-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-number {
+    font-size: 24px;
+  }
+}
+
+/* 暗色主題支持 */
+@media (prefers-color-scheme: dark) {
+  .stat-card {
+    background-color: var(--dark-card-bg, #1f1f1f);
+    border-color: var(--dark-border-color, #303030);
+  }
+  
+  .stat-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .stat-number {
+    color: var(--dark-text-color, #e8e8e8);
+  }
+  
+  .stat-label {
+    color: var(--dark-text-secondary, #8c8c8c);
+  }
+  
+  .stat-number-loading,
+  .stat-label-loading {
+    background: linear-gradient(90deg, #262626 25%, transparent 37%, #262626 63%);
+    background-size: 400% 100%;
+  }
+  
+  .stat-number.running {
+    color: var(--primary-color, #1890ff);
+  }
+  
+  .stat-number.completed {
+    color: var(--success-color, #52c41a);
+  }
+  
+  .stat-number.failed {
+    color: var(--danger-color, #ff4d4f);
+  }
+}

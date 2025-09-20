@@ -1,0 +1,414 @@
+/** 代理管理頁面樣式 */
+
+.proxies-page {
+  padding: 16px;
+  background-color: #f0f2f5;
+  min-height: calc(100vh - 64px);
+}
+
+/* 統計卡片區域 */
+.stat-cards-row {
+  margin-bottom: 16px;
+}
+
+/* 圖表區域 */
+.charts-row {
+  margin-bottom: 16px;
+}
+
+.chart-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card .ant-card-body {
+  padding: 16px;
+}
+
+/* 工具欄樣式 */
+.proxies-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: var(--color-bg-elevated);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+/* 統計信息樣式 */
+.proxies-stats {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background-color: var(--color-bg-elevated);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.proxies-stats strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* 表格樣式 */
+.proxies-table {
+  background-color: var(--color-bg-elevated);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.proxies-table .ant-table-thead > tr > th {
+  background-color: var(--color-bg-layout);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.proxies-table .ant-table-tbody > tr:hover > td {
+  background-color: var(--color-bg-text-hover);
+}
+
+.proxies-table .ant-table-tbody > tr.ant-table-row-selected > td {
+  background-color: var(--color-primary-bg);
+}
+
+/* 狀態標籤樣式 */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.active {
+  background-color: #f6ffed;
+  color: #52c41a;
+  border: 1px solid #b7eb8f;
+}
+
+.status-badge.inactive {
+  background-color: #fffbe6;
+  color: #faad14;
+  border: 1px solid #ffe58f;
+}
+
+.status-badge.failed {
+  background-color: #fff1f0;
+  color: #ff4d4f;
+  border: 1px solid #ffccc7;
+}
+
+/* 響應時間樣式 */
+.response-time {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.response-time.fast {
+  color: #52c41a;
+}
+
+.response-time.medium {
+  color: #faad14;
+}
+
+.response-time.slow {
+  color: #ff4d4f;
+}
+
+/* 位置信息樣式 */
+.location-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.location-info .flag {
+  width: 16px;
+  height: 12px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+/* 代理卡片樣式 */
+.proxy-card {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.proxy-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.proxy-card.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-bg);
+}
+
+.proxy-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg-layout);
+}
+
+.proxy-card-body {
+  padding: 16px;
+}
+
+.proxy-card-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-bg-layout);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 篩選面板樣式 */
+.filter-panel {
+  background-color: var(--color-bg-elevated);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.filter-panel-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--color-border);
+  font-weight: 600;
+}
+
+.filter-panel-body {
+  padding: 16px;
+}
+
+.filter-panel-footer {
+  padding: 16px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* 快速篩選標籤 */
+.quick-filters {
+  margin-bottom: 16px;
+}
+
+.quick-filter-tag {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quick-filter-tag:hover {
+  transform: scale(1.05);
+}
+
+.quick-filter-tag.active {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+/* 批量操作欄 */
+.batch-actions {
+  background-color: var(--color-primary-bg);
+  border: 1px solid var(--color-primary-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.batch-actions-info {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .proxies-page {
+    padding: 16px;
+  }
+
+  .proxies-toolbar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .proxies-toolbar .ant-space {
+    justify-content: center;
+  }
+
+  .proxies-stats {
+    font-size: 12px;
+  }
+
+  .proxies-stats strong {
+    font-size: 14px;
+  }
+
+  /* 移動端表格優化 */
+  .proxies-table .ant-table-content {
+    overflow-x: auto;
+  }
+
+  .proxies-table .ant-table-thead > tr > th,
+  .proxies-table .ant-table-tbody > tr > td {
+    white-space: nowrap;
+    min-width: 80px;
+  }
+
+  /* 模態框適配 */
+  .ant-modal {
+    max-width: calc(100vw - 32px);
+    margin: 16px;
+  }
+
+  .ant-modal-body {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .proxies-page {
+    padding: 12px;
+  }
+
+  .proxies-toolbar {
+    padding: 12px;
+  }
+
+  .proxies-stats {
+    padding: 8px 12px;
+  }
+
+  /* 按鈕堆疊 */
+  .ant-space {
+    flex-wrap: wrap;
+  }
+
+  .ant-btn {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}
+
+/* 深色模式適配 */
+@media (prefers-color-scheme: dark) {
+  .proxies-page {
+    background-color: #0f0f0f;
+  }
+
+  .proxies-toolbar,
+  .proxies-stats,
+  .proxies-table,
+  .filter-panel {
+    background-color: #1f1f1f;
+    border-color: #303030;
+  }
+
+  .proxy-card {
+    background-color: #1f1f1f;
+    border-color: #303030;
+  }
+
+  .proxy-card-header,
+  .proxy-card-footer {
+    background-color: #141414;
+  }
+
+  .status-badge.active {
+    background-color: #162312;
+    border-color: #274916;
+  }
+
+  .status-badge.inactive {
+    background-color: #1c1c03;
+    border-color: #59540a;
+  }
+
+  .status-badge.failed {
+    background-color: #2a1210;
+    border-color: #58181c;
+  }
+}
+
+/* 動畫效果 */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.filter-panel-enter {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.filter-panel-exit {
+  animation: slideOutRight 0.3s ease-out;
+}
+
+/* 加載動畫 */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* 自定義滾動條 */
+.proxies-table::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.proxies-table::-webkit-scrollbar-track {
+  background: var(--color-bg-layout);
+  border-radius: 4px;
+}
+
+.proxies-table::-webkit-scrollbar-thumb {
+  background: var(--color-text-secondary);
+  border-radius: 4px;
+}
+
+.proxies-table::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text);
+}

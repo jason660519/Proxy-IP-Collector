@@ -1,0 +1,190 @@
+/* 圖表容器樣式 */
+.chart-container {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.chart-container-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.chart-container-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #262626;
+  margin: 0;
+}
+
+.chart-container-subtitle {
+  font-size: 12px;
+  color: #8c8c8c;
+  margin-top: 4px;
+}
+
+.chart-container-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.chart-container-content {
+  position: relative;
+  min-height: 300px;
+}
+
+.chart-container-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.chart-container-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  text-align: center;
+  color: #8c8c8c;
+}
+
+.chart-container-empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+.chart-container-empty-text {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.chart-container-empty-description {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.chart-container-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.chart-container-footer-info {
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+.chart-container-footer-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.chart-container-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nw-resize;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.chart-container:hover .chart-container-resize-handle {
+  opacity: 0.3;
+}
+
+.chart-container-resize-handle:hover {
+  opacity: 0.6;
+}
+
+/* 圖表工具欄樣式 */
+.chart-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 6px;
+}
+
+.chart-toolbar-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #595959;
+}
+
+.chart-toolbar-item .anticon {
+  font-size: 14px;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .chart-container {
+    padding: 16px;
+  }
+  
+  .chart-container-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .chart-container-content {
+    min-height: 250px;
+  }
+  
+  .chart-container-loading,
+  .chart-container-empty {
+    min-height: 250px;
+  }
+  
+  .chart-toolbar {
+    flex-wrap: wrap;
+  }
+}
+
+/* 深色模式樣式 */
+.dark .chart-container {
+  background: #141414;
+}
+
+.dark .chart-container-title {
+  color: #fff;
+}
+
+.dark .chart-container-subtitle {
+  color: #8c8c8c;
+}
+
+.dark .chart-container-empty {
+  color: #8c8c8c;
+}
+
+.dark .chart-container-footer {
+  border-top-color: #303030;
+}
+
+.dark .chart-toolbar {
+  background: #1f1f1f;
+}
+
+.dark .chart-toolbar-item {
+  color: #8c8c8c;
+}

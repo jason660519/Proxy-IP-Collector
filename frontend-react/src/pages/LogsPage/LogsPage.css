@@ -1,0 +1,111 @@
+/* LogsPage 樣式 */
+
+.logs-page {
+  padding: 24px;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.logs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.logs-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.logs-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.logs-filter-card {
+  margin-bottom: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logs-table-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auto-refresh-toggle {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+}
+
+.auto-refresh-toggle label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #595959;
+  cursor: pointer;
+}
+
+.auto-refresh-toggle input[type="checkbox"] {
+  margin: 0;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .logs-page {
+    padding: 16px;
+  }
+  
+  .logs-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .logs-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .logs-filter-card .ant-space {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .logs-filter-card .ant-select,
+  .logs-filter-card .ant-input-search {
+    width: 100% !important;
+  }
+  
+  .auto-refresh-toggle {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+}
+
+/* 暗色主題支持 */
+@media (prefers-color-scheme: dark) {
+  .logs-page {
+    background-color: #141414;
+  }
+  
+  .logs-header h1 {
+    color: #ffffff;
+  }
+  
+  .logs-filter-card,
+  .logs-table-card {
+    background-color: #1f1f1f;
+    border-color: #303030;
+  }
+  
+  .auto-refresh-toggle label {
+    color: #d9d9d9;
+  }
+}

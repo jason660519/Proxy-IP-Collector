@@ -1,0 +1,256 @@
+/* 輸入框容器 */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* 輸入框包裝器 */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--input-bg, #fff);
+  border: 1px solid var(--input-border, #d9d9d9);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.input-wrapper:hover {
+  border-color: var(--input-hover-border, #40a9ff);
+}
+
+.input-wrapper.input-focused {
+  border-color: var(--input-focus-border, #1890ff);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+}
+
+.input-wrapper.input-error {
+  border-color: var(--input-error-border, #ff4d4f);
+}
+
+.input-wrapper.input-error.input-focused {
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.1);
+}
+
+.input-wrapper.input-disabled {
+  background-color: var(--input-disabled-bg, #f5f5f5);
+  border-color: var(--input-disabled-border, #d9d9d9);
+  cursor: not-allowed;
+}
+
+.input-wrapper.input-readonly {
+  background-color: var(--input-readonly-bg, #fafafa);
+}
+
+/* 輸入框大小 */
+.input-wrapper.input-small {
+  height: 28px;
+  font-size: 12px;
+}
+
+.input-wrapper.input-medium {
+  height: 36px;
+  font-size: 14px;
+}
+
+.input-wrapper.input-large {
+  height: 44px;
+  font-size: 16px;
+}
+
+/* 輸入框元素 */
+.input-element {
+  flex: 1;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--input-text, #333);
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.5;
+}
+
+.input-element::placeholder {
+  color: var(--input-placeholder, #bfbfbf);
+}
+
+.input-element:disabled {
+  color: var(--input-disabled-text, #bfbfbf);
+  cursor: not-allowed;
+}
+
+.input-element:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--input-bg, #fff) inset;
+  -webkit-text-fill-color: var(--input-text, #333);
+}
+
+/* 前綴和後綴 */
+.input-prefix,
+.input-suffix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--input-icon, #999);
+  transition: color 0.2s ease;
+}
+
+.input-prefix {
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
+.input-suffix {
+  padding-left: 4px;
+  padding-right: 8px;
+}
+
+.input-wrapper.input-small .input-prefix {
+  padding-left: 6px;
+  padding-right: 3px;
+}
+
+.input-wrapper.input-small .input-suffix {
+  padding-left: 3px;
+  padding-right: 6px;
+}
+
+.input-wrapper.input-large .input-prefix {
+  padding-left: 12px;
+  padding-right: 6px;
+}
+
+.input-wrapper.input-large .input-suffix {
+  padding-left: 6px;
+  padding-right: 12px;
+}
+
+/* 後綴容器 */
+.input-suffix-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 清除按鈕 */
+.input-clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background-color: var(--input-clear-bg, #ccc);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.input-clear-btn:hover {
+  background-color: var(--input-clear-hover-bg, #999);
+}
+
+/* 密碼切換按鈕 */
+.input-password-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  background: transparent;
+  border: none;
+  color: var(--input-icon, #999);
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.input-password-toggle:hover {
+  color: var(--input-icon-hover, #666);
+}
+
+/* 錯誤消息 */
+.input-error-message {
+  margin-top: 4px;
+  color: var(--input-error-text, #ff4d4f);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .input-wrapper {
+    font-size: 16px; /* 防止iOS縮放 */
+  }
+  
+  .input-wrapper.input-small {
+    height: 32px;
+    font-size: 14px;
+  }
+  
+  .input-wrapper.input-medium {
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .input-wrapper.input-large {
+    height: 48px;
+    font-size: 18px;
+  }
+}
+
+/* 暗色主題支持 */
+@media (prefers-color-scheme: dark) {
+  .input-wrapper {
+    background-color: var(--dark-input-bg, #1f1f1f);
+    border-color: var(--dark-input-border, #434343);
+  }
+  
+  .input-wrapper.input-disabled {
+    background-color: var(--dark-input-disabled-bg, #141414);
+    border-color: var(--dark-input-disabled-border, #303030);
+  }
+  
+  .input-wrapper.input-readonly {
+    background-color: var(--dark-input-readonly-bg, #262626);
+  }
+  
+  .input-element {
+    color: var(--dark-input-text, #e8e8e8);
+  }
+  
+  .input-element::placeholder {
+    color: var(--dark-input-placeholder, #8c8c8c);
+  }
+  
+  .input-element:disabled {
+    color: var(--dark-input-disabled-text, #8c8c8c);
+  }
+  
+  .input-prefix,
+  .input-suffix {
+    color: var(--dark-input-icon, #bfbfbf);
+  }
+  
+  .input-clear-btn {
+    background-color: var(--dark-input-clear-bg, #595959);
+  }
+  
+  .input-clear-btn:hover {
+    background-color: var(--dark-input-clear-hover-bg, #8c8c8c);
+  }
+  
+  .input-password-toggle {
+    color: var(--dark-input-icon, #bfbfbf);
+  }
+  
+  .input-password-toggle:hover {
+    color: var(--dark-input-icon-hover, #e8e8e8);
+  }
+}

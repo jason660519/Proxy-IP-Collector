@@ -1,0 +1,251 @@
+/* 主題樣式變量 */
+
+/* 亮色主題 (預設) */
+:root {
+    /* 主要顏色 */
+    --primary-color: #1890ff;
+    --primary-hover: #096dd9;
+    --primary-light: #e6f7ff;
+    
+    /* 次要顏色 */
+    --secondary-color: #722ed1;
+    --secondary-hover: #531dab;
+    --secondary-light: #f9f0ff;
+    
+    /* 狀態顏色 */
+    --success-color: #52c41a;
+    --success-hover: #389e0d;
+    --success-light: #f6ffed;
+    
+    --warning-color: #fa8c16;
+    --warning-hover: #d46b08;
+    --warning-light: #fff7e6;
+    
+    --danger-color: #f5222d;
+    --danger-hover: #cf1322;
+    --danger-light: #fff1f0;
+    
+    --info-color: #1890ff;
+    --info-hover: #096dd9;
+    --info-light: #e6f7ff;
+    
+    /* 中性色 */
+    --text-primary: #262626;
+    --text-secondary: #8c8c8c;
+    --text-disabled: #bfbfbf;
+    
+    --bg-primary: #ffffff;
+    --bg-secondary: #fafafa;
+    --bg-tertiary: #f5f5f5;
+    
+    --border-color: #d9d9d9;
+    --border-light: #f0f0f0;
+    
+    /* 卡片樣式 */
+    --card-bg: #ffffff;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.12);
+    
+    /* 按鈕樣式 */
+    --btn-primary-bg: var(--primary-color);
+    --btn-primary-text: #ffffff;
+    --btn-primary-border: var(--primary-color);
+    
+    --btn-secondary-bg: #ffffff;
+    --btn-secondary-text: var(--text-primary);
+    --btn-secondary-border: var(--border-color);
+    
+    /* 輸入框樣式 */
+    --input-bg: #ffffff;
+    --input-border: var(--border-color);
+    --input-text: var(--text-primary);
+    --input-placeholder: var(--text-secondary);
+    
+    /* 陰影 */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.18);
+    --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.24);
+    
+    /* 圓角 */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    
+    /* 過渡動畫 */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* 字體大小 */
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 30px;
+    
+    /* 字體粗細 */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* 行高 */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+}
+
+/* 深色主題 */
+[data-theme="dark"] {
+    /* 主要顏色調整 */
+    --primary-color: #40a9ff;
+    --primary-hover: #69c0ff;
+    --primary-light: #111d2c;
+    
+    /* 文本顏色 */
+    --text-primary: #ffffff;
+    --text-secondary: #a6a6a6;
+    --text-disabled: #595959;
+    
+    /* 背景顏色 */
+    --bg-primary: #141414;
+    --bg-secondary: #1f1f1f;
+    --bg-tertiary: #262626;
+    
+    /* 邊框顏色 */
+    --border-color: #303030;
+    --border-light: #1f1f1f;
+    
+    /* 卡片樣式 */
+    --card-bg: #1f1f1f;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.65);
+    
+    /* 按鈕樣式 */
+    --btn-secondary-bg: #1f1f1f;
+    --btn-secondary-text: var(--text-primary);
+    --btn-secondary-border: #303030;
+    
+    /* 輸入框樣式 */
+    --input-bg: #141414;
+    --input-border: #303030;
+    --input-text: var(--text-primary);
+    --input-placeholder: var(--text-secondary);
+}
+
+/* 主題切換動畫 */
+* {
+    transition: background-color var(--transition-normal), 
+                color var(--transition-normal), 
+                border-color var(--transition-normal);
+}
+
+/* 主題切換按鈕 */
+.theme-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    z-index: 1000;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-xl);
+}
+
+.theme-toggle i {
+    font-size: 20px;
+    color: var(--text-primary);
+    transition: all var(--transition-normal);
+}
+
+/* 主題圖標切換 */
+.theme-toggle .fa-sun {
+    display: block;
+}
+
+.theme-toggle .fa-moon {
+    display: none;
+}
+
+[data-theme="dark"] .theme-toggle .fa-sun {
+    display: none;
+}
+
+[data-theme="dark"] .theme-toggle .fa-moon {
+    display: block;
+}
+
+/* 自定義滾動條 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* 選擇文本樣式 */
+::selection {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* 焦點樣式 */
+*:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* 高對比度模式支持 */
+@media (prefers-contrast: high) {
+    :root {
+        --text-primary: #000000;
+        --text-secondary: #333333;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f5f5f5;
+        --border-color: #000000;
+    }
+    
+    [data-theme="dark"] {
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --bg-primary: #000000;
+        --bg-secondary: #111111;
+        --border-color: #ffffff;
+    }
+}
+
+/* 減少動畫模式支持 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

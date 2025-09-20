@@ -1,0 +1,94 @@
+/* 主佈局樣式 */
+.main-layout {
+  min-height: 100vh;
+}
+
+/* 側邊欄樣式 */
+.main-layout .ant-layout-sider {
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.main-layout .ant-layout-sider-trigger {
+  background: #002140;
+}
+
+/* 頭部樣式 */
+.main-layout .ant-layout-header {
+  padding: 0 24px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 內容區域樣式 */
+.main-layout .ant-layout-content {
+  margin: 24px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* 深色模式樣式 */
+.main-layout.dark .ant-layout-header {
+  background: #001529;
+  color: #fff;
+}
+
+.main-layout.dark .ant-layout-content {
+  background: #141414;
+  color: #fff;
+}
+
+.main-layout.dark .ant-layout-sider {
+  background: #001529;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .main-layout .ant-layout-content {
+    margin: 12px;
+    padding: 16px;
+  }
+  
+  .main-layout .ant-layout-header {
+    padding: 0 16px;
+  }
+}
+
+/* 麵包屑樣式 */
+.main-layout .ant-breadcrumb {
+  margin-bottom: 16px;
+}
+
+/* 用戶菜單樣式 */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-menu .ant-avatar {
+  background-color: #1890ff;
+}
+
+/* 通知徽章樣式 */
+.notification-badge .ant-badge-count {
+  box-shadow: 0 0 0 1px #fff;
+}
+
+/* 菜單項樣式 */
+.main-layout .ant-menu-item {
+  margin: 4px 8px !important;
+  border-radius: 6px;
+}
+
+.main-layout .ant-menu-item-selected {
+  background-color: #1890ff !important;
+}
+
+.main-layout .ant-menu-item:hover {
+  background-color: rgba(24, 144, 255, 0.1) !important;
+}
