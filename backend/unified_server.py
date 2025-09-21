@@ -6,6 +6,7 @@
 import sys
 import os
 from pathlib import Path
+import subprocess
 
 # 將後端目錄添加到Python路徑
 backend_dir = Path(__file__).resolve().parent
@@ -99,6 +100,11 @@ def main():
         action="store_true",
         help="啟用代碼熱重載 (開發模式)"
     )
+    parser.add_argument(
+        "--build-frontend",
+        action="store_true",
+        help="啟動前構建前端 (僅在full模式下有效)"
+    )
     
     # 解析參數
     args = parser.parse_args()
@@ -106,6 +112,31 @@ def main():
     # 如果指定了--mock，則覆蓋mode
     if args.mock:
         args.mode = "mock"
+    
+    # 構建前端（如果請求且模式為full）
+    if args.build_frontend and args.mode == "full":
+        print("正在構建前端...")
+        try:
+            import subprocess
+            frontend_dir = Path(__file__).resolve().parent.parent / "frontend-react"
+            if frontend_dir.exists():
+                result = subprocess.run(
+                    ["npm", "run", "build"],
+                    cwd=frontend_dir,
+                    capture_output=True,
+                    text=True,
+                    shell=True
+                )
+                if result.returncode == 0:
+                    print("✅ 前端構建成功")
+                else:
+                    print(f"❌ 前端構建失敗: {result.stderr}")
+                    print("您可以手動構建: cd frontend-react && npm run build")
+            else:
+                print(f"❌ 前端目錄不存在: {frontend_dir}")
+        except Exception as e:
+            print(f"❌ 構建前端時出錯: {e}")
+            print("請確保已安裝Node.js和npm")
     
     # 打印啟動信息
     print(f"""

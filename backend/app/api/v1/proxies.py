@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db_session
 from app.core.logging import get_logger
 from app.models.proxy import Proxy, ProxySource
-from app.schemas.proxy import ProxyResponse, ProxyFilter, Protocol, AnonymityLevel
+from app.schemas.proxy import ProxyResponse, ProxyFilter, ProtocolType, AnonymityLevel
 
 logger = get_logger(__name__)
 
@@ -47,7 +47,7 @@ class ProxyListResponse(BaseModel):
 async def get_proxies(
     page: int = Query(1, ge=1, description="頁碼"),
     page_size: int = Query(20, ge=1, le=100, description="每頁數量"),
-    protocol: Optional[Protocol] = Query(None, description="協議篩選"),
+    protocol: Optional[ProtocolType] = Query(None, description="協議篩選"),
     anonymity_level: Optional[AnonymityLevel] = Query(None, description="匿名度篩選"),
     country: Optional[str] = Query(None, description="國家篩選"),
     is_active: Optional[bool] = Query(None, description="活動狀態篩選"),
@@ -339,7 +339,7 @@ async def validate_proxy(
 
 @router.get("/random", response_model=ProxyResponse)
 async def get_random_proxy(
-    protocol: Optional[Protocol] = Query(None, description="協議篩選"),
+    protocol: Optional[ProtocolType] = Query(None, description="協議篩選"),
     anonymity_level: Optional[AnonymityLevel] = Query(None, description="匿名度篩選"),
     country: Optional[str] = Query(None, description="國家篩選"),
     db: AsyncSession = Depends(get_db_session),

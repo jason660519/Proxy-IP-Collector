@@ -151,7 +151,7 @@ class ExtractionCoordinator:
                     "source": extractor_name,
                     "success": True,
                     "proxies_count": len(result.proxies),
-                    "metadata": result.metadata
+                    "metadata": result.extra_metadata
                 })
             else:
                 self.stats["failed_sources"] += 1
@@ -297,7 +297,7 @@ class ExtractionCoordinator:
                         total_found=len(result.proxies),
                         success=result.success,
                         error_message=result.error_message,
-                        metadata=result.metadata,
+                        extra_metadata=result.extra_metadata,
                     )
                     session.add(log_entry)
                 

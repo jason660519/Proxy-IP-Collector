@@ -1,0 +1,63 @@
+{
+  "timestamp": "2024-01-20T10:30:00Z",
+  "summary": {
+    "total_tests": 2,
+    "passed": 1,
+    "failed": 1
+  },
+  "results": {
+    "services": {
+      "postgresql": {
+        "running": false,
+        "status": "stopped"
+      }
+    },
+    "postgresql": {
+      "status": "failed",
+      "message": "連接錯誤: invalid DSN: scheme is expected to be either \"postgresql\" or \"postgres\", got 'postgresql+asyncpg'",
+      "error_type": "ClientConfigurationError",
+      "recommendation": "請檢查數據庫配置和網絡連接"
+    },
+    "sqlite": {
+      "status": "success",
+      "message": "SQLite後備方案可用",
+      "version": "3.47.1",
+      "database_path": "data\\proxy_collector.db",
+      "test_data": [
+        1,
+        "test_record",
+        "2025-09-21 13:27:53"
+      ]
+    }
+  },
+  "recommendations": [
+    "📝 PostgreSQL改進建議：",
+    "  1. 安裝PostgreSQL：",
+    "     - Windows: 下載並安裝PostgreSQL安裝包",
+    "     - macOS: brew install postgresql",
+    "     - Linux: sudo apt-get install postgresql",
+    "  2. 創建數據庫和用戶：",
+    "     - 創建數據庫: CREATE DATABASE proxy_collector;",
+    "     - 創建用戶: CREATE USER postgres WITH PASSWORD 'password';",
+    "     - 授權: GRANT ALL PRIVILEGES ON DATABASE proxy_collector TO postgres;",
+    "  3. 啟動服務：",
+    "     - Windows: net start postgresql",
+    "     - macOS/Linux: brew services start postgresql",
+    "  4. 檢查端口：確保5432端口開放",
+    "\n✅ SQLite方案：",
+    "  - SQLite已準備就緒，可作為開發環境使用",
+    "  - 適合單機開發和測試",
+    "  - 生產環境建議使用PostgreSQL",
+    "\n🔧 通用建議：",
+    "  1. 環境變量：創建 .env 文件並配置正確的連接參數",
+    "  2. 網絡連接：確保數據庫服務器可訪問",
+    "  3. 防火牆：檢查防火牆設置是否阻止連接",
+    "  4. 配置文件：檢查 app/core/config.py 中的配置"
+  ],
+  "next_steps": [
+    "根據測試結果配置數據庫連接",
+    "更新 .env 文件中的連接參數",
+    "重新運行測試以驗證配置",
+    "考慮使用SQLite進行開發環境部署"
+  ]
+}

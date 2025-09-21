@@ -239,7 +239,7 @@ async def get_crawl_history(
                 success=log.success,
                 error_message=log.error_message,
                 created_at=log.created_at,
-                metadata=log.metadata,
+                metadata=log.extra_metadata,
             )
             for log in logs
         ]
@@ -292,7 +292,7 @@ async def test_source(source_name: str) -> Dict[str, Any]:
             "success": result.success,
             "proxies_found": len(result.proxies),
             "error_message": result.error_message,
-            "metadata": result.metadata,
+            "metadata": result.extra_metadata,
         }
         
     except Exception as e:

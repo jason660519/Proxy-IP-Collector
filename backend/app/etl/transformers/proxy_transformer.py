@@ -3,7 +3,7 @@
 """
 from typing import Dict, Any, List, Optional
 from datetime import datetime
-from app.schemas.proxy import Protocol, AnonymityLevel
+from app.schemas.proxy import ProtocolType, AnonymityLevel
 from app.core.logging import get_logger
 
 logger = get_logger(__name__)
@@ -130,21 +130,21 @@ class ProxyDataTransformer:
             str: 標準化的協議類型
         """
         if not protocol:
-            return Protocol.HTTP.value
+            return ProtocolType.HTTP.value
         
         protocol_lower = protocol.lower().strip()
         
         # 映射常見的協議名稱
         protocol_map = {
-            "http": Protocol.HTTP.value,
-            "https": Protocol.HTTPS.value,
-            "ssl": Protocol.HTTPS.value,
-            "socks4": Protocol.SOCKS4.value,
-            "socks5": Protocol.SOCKS5.value,
-            "socks": Protocol.SOCKS5.value,
+            "http": ProtocolType.HTTP.value,
+            "https": ProtocolType.HTTPS.value,
+            "ssl": ProtocolType.HTTPS.value,
+            "socks4": ProtocolType.SOCKS4.value,
+            "socks5": ProtocolType.SOCKS5.value,
+            "socks": ProtocolType.SOCKS5.value,
         }
         
-        return protocol_map.get(protocol_lower, Protocol.HTTP.value)
+        return protocol_map.get(protocol_lower, ProtocolType.HTTP.value)
     
     @staticmethod
     def _normalize_anonymity_level(anonymity: str) -> str:
@@ -158,7 +158,7 @@ class ProxyDataTransformer:
             str: 標準化的匿名級別
         """
         if not anonymity:
-            return AnonymityLevel.UNKNOWN.value
+            return None
         
         anonymity_lower = anonymity.lower().strip()
         
@@ -170,7 +170,6 @@ class ProxyDataTransformer:
             "medium": AnonymityLevel.ANONYMOUS.value,
             "transparent": AnonymityLevel.TRANSPARENT.value,
             "low": AnonymityLevel.TRANSPARENT.value,
-            "unknown": AnonymityLevel.UNKNOWN.value,
         }
         
         # 檢查是否包含關鍵詞
@@ -178,7 +177,7 @@ class ProxyDataTransformer:
             if key in anonymity_lower:
                 return value
         
-        return AnonymityLevel.UNKNOWN.value
+        return None
     
     @staticmethod
     def _normalize_country(country: str) -> Optional[str]:
@@ -322,7 +321,7 @@ class ProxyDataTransformer:
         
         # 協議驗證
         protocol = proxy_data.get("protocol", "")
-        valid_protocols = [p.value for p in Protocol]
+        valid_protocols = [p.value for p in ProtocolType]
         if protocol not in valid_protocols:
             logger.warning(f"無效的協議類型: {protocol}")
             return False

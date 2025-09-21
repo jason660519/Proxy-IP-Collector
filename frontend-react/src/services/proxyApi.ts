@@ -25,7 +25,7 @@ import { RootState } from '@/store';
 export const proxyApi = createApi({
   reducerPath: 'proxyApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api',
+    baseUrl: '/api/v1',
     prepareHeaders: (headers, { getState }) => {
       // 從store獲取用戶token
       const token = (getState() as RootState).user.user?.id;
@@ -233,7 +233,7 @@ export const proxyApi = createApi({
       }>;
       total: number;
     }, void>({
-      query: () => '/v1/crawl/sources',
+      query: () => '/crawl/sources',
       providesTags: ['Dashboard'],
     }),
     

@@ -15,7 +15,7 @@ from contextlib import asynccontextmanager
 from app.core.logging import get_logger, setup_logging
 from app.architecture.config_manager import config_manager, setup_config
 from app.architecture.health_check import health_checker
-from app.architecture.api_standard import api_router
+from app.api import v1_router as api_router
 
 logger = get_logger(__name__)
 

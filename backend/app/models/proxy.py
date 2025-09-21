@@ -29,7 +29,7 @@ class Proxy(Base):
     last_success = Column(DateTime, comment="最後成功時間")
     source = Column(String(100), comment="來源")
     quality_score = Column(Float, default=0.0, comment="質量評分")
-    metadata = Column(JSON, default=dict, comment="額外元數據")
+    extra_metadata = Column(JSON, default=dict, comment="額外元數據")
     is_active = Column(Boolean, default=True, index=True, comment="是否啟用")
     created_at = Column(DateTime, default=datetime.utcnow, comment="創建時間")
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="更新時間")
@@ -91,7 +91,7 @@ class ProxyCrawlLog(Base):
     total_found = Column(Integer, default=0, comment="總共找到數量")
     success = Column(Boolean, nullable=False, comment="是否成功")
     error_message = Column(Text, comment="錯誤信息")
-    metadata = Column(JSON, default=dict, comment="元數據")
+    extra_metadata = Column(JSON, default=dict, comment="元數據")
     crawled_at = Column(DateTime, default=datetime.utcnow, index=True, comment="爬取時間")
     
     __table_args__ = (

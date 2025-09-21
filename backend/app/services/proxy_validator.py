@@ -3,7 +3,7 @@
 """
 import asyncio
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional, Tuple
 import aiohttp
 from aiohttp import ClientTimeout, ClientError
@@ -386,3 +386,104 @@ class ProxyValidator:
         except Exception as e:
             logger.error("清理舊檢查結果失敗", error=str(e))
             self.db_session.rollback()
+
+
+# 全局服務函數
+async def validate_proxy_service(
+    db_session: Session,
+    proxy_id: str,
+    test_urls: Optional[List[str]] = None,
+    timeout: int = 10
+) -> Dict[str, Any]:
+    """
+    驗證單個代理服務
+    
+    Args:
+        db_session: 數據庫會話
+        proxy_id: 代理ID
+        test_urls: 測試URL列表
+        timeout: 超時時間（秒）
+        
+    Returns:
+        驗證結果
+    """
+    validator = ProxyValidator(db_session)
+    
+    # 查詢代理
+    proxy = db_session.query(Proxy).filter(Proxy.id == proxy_id).first()
+    if not proxy:
+        raise ValidationException(f"代理不存在: {proxy_id}")
+    
+    # 執行驗證
+    results = await validator.validate_proxies([proxy], timeout=timeout, test_urls=test_urls)
+    
+    if not results:
+        raise ValidationException("驗證失敗")
+    
+    result = results[0]
+    return {
+        "proxy_id": proxy_id,
+        "is_successful": result.is_successful,
+        "response_time": result.response_time,
+        "status_code": result.status_code,
+        "error_message": result.error_message,
+        "checked_at": result.checked_at
+    }
+
+
+async def validate_proxies_batch_service(
+    db_session: Session,
+    proxy_ids: List[str],
+    max_concurrent: int = 10,
+    timeout: int = 10,
+    test_urls: Optional[List[str]] = None
+) -> Dict[str, Any]:
+    """
+    批量驗證代理服務
+    
+    Args:
+        db_session: 數據庫會話
+        proxy_ids: 代理ID列表
+        max_concurrent: 最大並發數
+        timeout: 超時時間（秒）
+        test_urls: 測試URL列表
+        
+    Returns:
+        批量驗證結果
+    """
+    validator = ProxyValidator(db_session)
+    
+    # 查詢代理
+    proxies = db_session.query(Proxy).filter(Proxy.id.in_(proxy_ids)).all()
+    if not proxies:
+        raise ValidationException("未找到有效的代理")
+    
+    # 執行批量驗證
+    results = await validator.validate_proxies(
+        proxies,
+        max_concurrent=max_concurrent,
+        timeout=timeout,
+        test_urls=test_urls
+    )
+    
+    # 統計結果
+    successful = len([r for r in results if r.is_successful])
+    failed = len(results) - successful
+    
+    return {
+        "total_tested": len(results),
+        "successful": successful,
+        "failed": failed,
+        "success_rate": successful / len(results) if results else 0,
+        "results": [
+            {
+                "proxy_id": result.proxy_id,
+                "is_successful": result.is_successful,
+                "response_time": result.response_time,
+                "status_code": result.status_code,
+                "error_message": result.error_message,
+                "checked_at": result.checked_at
+            }
+            for result in results
+        ]
+    }

@@ -28,7 +28,7 @@ class ValidateRequest(BaseModel):
     timeout: Optional[int] = 10
 
 # 創建路由
-router = APIRouter(prefix="/api", tags=["proxy-extractors"])
+router = APIRouter(prefix="", tags=["proxy-extractors"])
 
 # 全局爬取器工廠實例
 extractor_factory = ExtractorFactory()

@@ -182,8 +182,8 @@ class UnifiedServer:
         
         # 根據模式註冊不同的API路由
         if self.mode in ["full", "api"]:
-            # 註冊完整API路由
-            self.app.include_router(v1_router, prefix="/api/v1")
+            # 註冊完整API路由 (v1_router已經有/api/v1前綴，不需要再次添加)
+            self.app.include_router(v1_router)
             logger.info("完整API路由註冊完成")
         
         if self.mode == "mock":
@@ -265,24 +265,97 @@ class UnifiedServer:
     def _setup_static_files(self):
         """設置靜態文件"""
         try:
-            # 創建靜態文件目錄
-            static_dir = Path("static")
-            static_dir.mkdir(exist_ok=True)
+            # 檢查前端構建目錄
+            frontend_build_dir = Path(__file__).resolve().parent.parent.parent.parent / "frontend-react" / "dist"
             
-            # 掛載靜態文件
-            self.app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
-            logger.info("靜態文件掛載完成")
+            if frontend_build_dir.exists():
+                # 掛載前端構建文件
+                self.app.mount("/", StaticFiles(directory=str(frontend_build_dir), html=True), name="frontend")
+                logger.info(f"前端靜態文件掛載完成: {frontend_build_dir}")
+            else:
+                # 創建後備靜態文件目錄
+                static_dir = Path("static")
+                static_dir.mkdir(exist_ok=True)
+                
+                # 掛載後備靜態文件
+                self.app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+                logger.warning(f"前端構建目錄不存在，使用後備靜態目錄: {static_dir}")
+                
+                # 創建簡單的HTML頁面
+                self._create_fallback_html()
             
         except Exception as e:
             logger.warning(f"靜態文件設置失敗: {e}")
     
-    def run(self, host: str = None, port: int = None, **kwargs):
+    def _create_fallback_html(self):
+        """創建後備HTML頁面"""
+        try:
+            static_dir = Path("static")
+            index_html = static_dir / "index.html"
+            
+            html_content = """
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代理IP池收集器</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { text-align: center; margin-bottom: 40px; }
+        .status { padding: 20px; background: #e8f5e8; border-radius: 4px; margin: 20px 0; }
+        .warning { padding: 20px; background: #fff3cd; border-radius: 4px; margin: 20px 0; border-left: 4px solid #ffc107; }
+        .api-link { display: inline-block; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; margin: 10px 5px; }
+        .api-link:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🕸️ 代理IP池收集器</h1>
+            <p>系統運行正常</p>
+        </div>
+        
+        <div class="status">
+            <h3>✅ 後端API服務運行中</h3>
+            <p>模式: {mode}</p>
+            <p>前端構建文件未找到，請執行以下命令構建前端:</p>
+            <code>cd frontend-react && npm run build</code>
+        </div>
+        
+        <div class="warning">
+            <h3>⚠️ 開發模式提示</h3>
+            <p>如果您正在開發前端，請在前端目錄運行:</p>
+            <code>cd frontend-react && npm run dev</code>
+            <p>這將在 http://localhost:3000 啟動開發服務器</p>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <h3>API文檔</h3>
+            <a href="/docs" class="api-link">📚 Swagger文檔</a>
+            <a href="/redoc" class="api-link">📖 ReDoc文檔</a>
+            <a href="/health" class="api-link">🏥 健康檢查</a>
+        </div>
+    </div>
+</body>
+</html>
+            """.format(mode=self.mode)
+            
+            index_html.write_text(html_content, encoding='utf-8')
+            logger.info("後備HTML頁面創建完成")
+            
+        except Exception as e:
+            logger.warning(f"後備HTML頁面創建失敗: {e}")
+    
+    def run(self, host: str = None, port: int = None, reload: bool = None, **kwargs):
         """
         運行服務器
         
         Args:
             host: 主機地址
             port: 端口
+            reload: 是否啟用熱重載
             **kwargs: 其他uvicorn參數
         """
         import uvicorn
@@ -296,13 +369,17 @@ class UnifiedServer:
         
         logger.info(f"啟動服務器 - {host}:{port} (模式: {self.mode})")
         
+        # 設置reload參數 - 優先使用傳入的參數，否則使用settings.DEBUG
+        if reload is None:
+            reload = settings.DEBUG
+        
         # 運行服務器
         uvicorn.run(
             app,
             host=host,
             port=port,
-            reload=settings.DEBUG or kwargs.get("reload", False),
-            log_level=kwargs.get("log_level", "info"),
+            reload=reload,
+            log_level=kwargs.pop("log_level", "info"),
             **kwargs
         )
 

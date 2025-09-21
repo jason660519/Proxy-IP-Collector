@@ -102,7 +102,7 @@ class ConfigManager:
         
         self.config_sources: List[ConfigSource] = []
         self.config_data: Dict[str, Any] = {}
-        self.config_schema: ConfigSchema = ConfigSchema()
+        self.config_schema: Optional[ConfigSchema] = None
         self._setup_default_sources()
         
         logger.info(f"配置管理器初始化完成 - 配置目錄: {self.config_dir}")
@@ -296,6 +296,7 @@ class ConfigManager:
         try:
             # 使用Pydantic模型驗證
             validated_config = ConfigSchema(**config_data)
+            self.config_schema = validated_config
             return validated_config.dict()
             
         except Exception as e:
