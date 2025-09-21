@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Input, Card } from '../index';
+
 import { Task, TaskType } from '../../types/task.types';
+import ProxySourceSelector from '../ProxySourceSelector';
 import './TaskForm.css';
 
 export interface TaskFormProps {
@@ -58,6 +60,8 @@ export const TaskForm: React.FC<TaskFormProps> = ({
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+  const [useProxySourceSelector, setUseProxySourceSelector] = useState(false);
+  const [selectedProxySource, setSelectedProxySource] = useState<string>('');
 
   useEffect(() => {
     if (task) {
@@ -69,6 +73,16 @@ export const TaskForm: React.FC<TaskFormProps> = ({
         schedule: task.schedule || '',
         priority: task.priority || 1,
       });
+      // 檢查是否包含代理來源配置
+      if (task.config && task.config.source_type) {
+        setUseProxySourceSelector(true);
+        // 嘗試從配置中識別來源名稱
+        const sourceName = task.config.source_name || 
+                         (task.config.base_url && extractSourceName(task.config.base_url)) ||
+                         (task.config.api_endpoint && extractSourceName(task.config.api_endpoint)) ||
+                         '';
+        setSelectedProxySource(sourceName);
+      }
     } else {
       setFormData({
         name: '',
@@ -78,9 +92,30 @@ export const TaskForm: React.FC<TaskFormProps> = ({
         schedule: '',
         priority: 1,
       });
+      setUseProxySourceSelector(false);
+      setSelectedProxySource('');
     }
     setErrors({});
   }, [task]);
+
+  const extractSourceName = (url: string) => {
+    // 從URL中提取可能的來源名稱
+    try {
+      const urlObj = new URL(url);
+      const hostname = urlObj.hostname;
+      if (hostname.includes('89ip')) return '89ip.cn';
+      if (hostname.includes('kuaidaili')) return 'kuaidaili-intr';
+      if (hostname.includes('geonode')) return 'geonode-api-v2';
+      if (hostname.includes('proxydb')) return 'proxydb-net';
+      if (hostname.includes('proxynova')) return 'proxynova-com';
+      if (hostname.includes('spys')) return 'spys-one';
+      if (hostname.includes('free-proxy-list')) return 'free-proxy-list.net';
+      if (hostname.includes('sslproxies')) return 'ssl-proxies';
+      return '';
+    } catch {
+      return '';
+    }
+  };
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -91,6 +126,23 @@ export const TaskForm: React.FC<TaskFormProps> = ({
         delete newErrors[field];
         return newErrors;
       });
+    }
+  };
+
+  const handleProxySourceChange = (sourceName: string, config: any) => {
+    setSelectedProxySource(sourceName);
+    setFormData(prev => ({ 
+      ...prev, 
+      config: JSON.stringify(config, null, 2),
+      description: `使用代理來源: ${sourceName}`
+    }));
+  };
+
+  const handleUseProxySelectorChange = (useSelector: boolean) => {
+    setUseProxySourceSelector(useSelector);
+    if (!useSelector) {
+      setSelectedProxySource('');
+      setFormData(prev => ({ ...prev, config: '' }));
     }
   };
 
@@ -228,17 +280,53 @@ export const TaskForm: React.FC<TaskFormProps> = ({
         </div>
 
         <div className="form-group">
-          <label className="form-label">配置（JSON格式）</label>
-          <textarea
-            value={formData.config}
-            onChange={(e) => handleInputChange('config', e.target.value)}
-            placeholder='例如：\n{\n  "timeout": 30,\n  "retry_count": 3\n}'
-            className="form-textarea"
-            disabled={disabled}
-            rows={6}
-          />
-          {errors.config && <div className="error-message">{errors.config}</div>}
+          <label className="form-label">配置方式</label>
+          <div style={{ marginBottom: 12 }}>
+            <label style={{ marginRight: 16 }}>
+              <input
+                type="radio"
+                checked={!useProxySourceSelector}
+                onChange={() => handleUseProxySelectorChange(false)}
+                disabled={disabled}
+                style={{ marginRight: 8 }}
+              />
+              手動輸入JSON配置
+            </label>
+            <label>
+              <input
+                type="radio"
+                checked={useProxySourceSelector}
+                onChange={() => handleUseProxySelectorChange(true)}
+                disabled={disabled}
+                style={{ marginRight: 8 }}
+              />
+              使用代理來源選擇器
+            </label>
+          </div>
         </div>
+
+        {useProxySourceSelector ? (
+          <div className="form-group">
+            <ProxySourceSelector
+              value={selectedProxySource}
+              onChange={handleProxySourceChange}
+              disabled={disabled}
+            />
+          </div>
+        ) : (
+          <div className="form-group">
+            <label className="form-label">配置（JSON格式）</label>
+            <textarea
+              value={formData.config}
+              onChange={(e) => handleInputChange('config', e.target.value)}
+              placeholder='例如：\n{\n  "timeout": 30,\n  "retry_count": 3\n}'
+              className="form-textarea"
+              disabled={disabled}
+              rows={6}
+            />
+            {errors.config && <div className="error-message">{errors.config}</div>}
+          </div>
+        )}
 
         <div className="form-group">
           <label className="form-label">定時任務（Cron表達式）</label>

@@ -215,6 +215,27 @@ export const proxyApi = createApi({
       query: () => '/dashboard/system-status',
       providesTags: ['Dashboard'],
     }),
+
+    /**
+     * 獲取可用的爬取來源
+     */
+    getAvailableSources: builder.query<{
+      sources: Array<{
+        name: string;
+        source_type: string;
+        description: string;
+        enabled: boolean;
+        base_url?: string;
+        api_endpoint?: string;
+        rate_limit: number;
+        timeout: number;
+        retry_count: number;
+      }>;
+      total: number;
+    }, void>({
+      query: () => '/v1/crawl/sources',
+      providesTags: ['Dashboard'],
+    }),
     
     // 任務相關端點
     
@@ -356,6 +377,7 @@ export const {
   useGetDashboardStatsQuery,
   useGetChartDataQuery,
   useGetSystemStatusQuery,
+  useGetAvailableSourcesQuery,
   
   // 任務相關
   useGetTasksQuery,
