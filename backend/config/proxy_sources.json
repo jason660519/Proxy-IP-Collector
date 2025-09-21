@@ -1,0 +1,109 @@
+{
+  "proxy_sources": [
+    {
+      "name": "89ip.cn",
+      "enabled": true,
+      "source_type": "web_scraping",
+      "base_url": "https://www.89ip.cn/index_{page}.html",
+      "page_range": [1, 10],
+      "rate_limit": 60,
+      "timeout": 30,
+      "retry_count": 3,
+      "description": "89ip.cn 多頁面代理爬取"
+    },
+    {
+      "name": "kuaidaili-intr",
+      "enabled": true,
+      "source_type": "web_scraping",
+      "base_url": "https://www.kuaidaili.com/free/intr/",
+      "proxy_type": "intr",
+      "rate_limit": 60,
+      "timeout": 30,
+      "retry_count": 3,
+      "description": "快代理國內代理"
+    },
+    {
+      "name": "kuaidaili-inha",
+      "enabled": true,
+      "source_type": "web_scraping",
+      "base_url": "https://www.kuaidaili.com/free/inha/",
+      "proxy_type": "inha",
+      "rate_limit": 60,
+      "timeout": 30,
+      "retry_count": 3,
+      "description": "快代理海外代理"
+    },
+    {
+      "name": "geonode-api-v2",
+      "enabled": true,
+      "source_type": "api",
+      "api_endpoint": "https://proxylist.geonode.com/api/proxy-list",
+      "page_range": [1, 5],
+      "limit_per_page": 50,
+      "rate_limit": 120,
+      "timeout": 30,
+      "retry_count": 3,
+      "description": "GeoNode API 代理服務"
+    },
+    {
+      "name": "proxydb-net",
+      "enabled": true,
+      "source_type": "web_scraping",
+      "base_url": "http://proxydb.net/?offset={offset}",
+      "offset_range": [0, 150, 30],
+      "rate_limit": 30,
+      "timeout": 45,
+      "retry_count": 3,
+      "description": "ProxyDB.net 代理數據庫"
+    },
+    {
+      "name": "proxynova-com",
+      "enabled": true,
+      "source_type": "web_scraping",
+      "base_url": "https://www.proxynova.com/proxy-server-list/",
+      "country_pages": ["country-all", "country-us", "country-gb"],
+      "rate_limit": 40,
+      "timeout": 30,
+      "retry_count": 3,
+      "description": "ProxyNova.com 多國家代理"
+    },
+    {
+      "name": "spys-one",
+      "enabled": true,
+      "source_type": "playwright",
+      "base_url": "http://spys.one/free-proxy-list/",
+      "use_playwright": true,
+      "rate_limit": 20,
+      "timeout": 60,
+      "retry_count": 2,
+      "description": "Spys.one JavaScript 代理爬取"
+    },
+    {
+      "name": "free-proxy-list.net",
+      "enabled": true,
+      "source_type": "web_scraping",
+      "base_url": "https://free-proxy-list.net/",
+      "rate_limit": 60,
+      "timeout": 30,
+      "retry_count": 3,
+      "description": "Free Proxy List 免費代理"
+    },
+    {
+      "name": "ssl-proxies",
+      "enabled": true,
+      "source_type": "web_scraping",
+      "base_url": "https://www.sslproxies.org/",
+      "rate_limit": 60,
+      "timeout": 30,
+      "retry_count": 3,
+      "description": "SSL Proxies HTTPS代理"
+    }
+  ],
+  "global_settings": {
+    "max_concurrent": 5,
+    "default_rate_limit": 60,
+    "default_timeout": 30,
+    "default_retry_count": 3,
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  }
+}

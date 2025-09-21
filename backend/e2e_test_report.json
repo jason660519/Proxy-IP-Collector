@@ -1,0 +1,133 @@
+{
+  "test_timestamp": "2025-09-21T11:30:00.312689",
+  "total_tests": 11,
+  "successful_tests": 7,
+  "failed_tests": 4,
+  "success_rate": 63.63636363636363,
+  "category_results": {
+    "api": {
+      "total": 4,
+      "successful": 0,
+      "success_rate": 0.0
+    },
+    "frontend": {
+      "total": 2,
+      "successful": 2,
+      "success_rate": 100.0
+    },
+    "config": {
+      "total": 2,
+      "successful": 2,
+      "success_rate": 100.0
+    },
+    "extractors": {
+      "total": 3,
+      "successful": 3,
+      "success_rate": 100.0
+    }
+  },
+  "detailed_results": {
+    "api_endpoints": [
+      {
+        "endpoint": "/",
+        "description": "根端點",
+        "status_code": null,
+        "success": false,
+        "error": "<urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>",
+        "timestamp": "2025-09-21T11:29:48.013407"
+      },
+      {
+        "endpoint": "/health",
+        "description": "健康檢查",
+        "status_code": null,
+        "success": false,
+        "error": "<urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>",
+        "timestamp": "2025-09-21T11:29:52.130228"
+      },
+      {
+        "endpoint": "/api/v1/crawl/sources",
+        "description": "獲取爬取來源",
+        "status_code": null,
+        "success": false,
+        "error": "<urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>",
+        "timestamp": "2025-09-21T11:29:56.214205"
+      },
+      {
+        "endpoint": "/api/v1/proxies/stats",
+        "description": "代理統計",
+        "status_code": null,
+        "success": false,
+        "error": "<urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>",
+        "timestamp": "2025-09-21T11:30:00.306604"
+      }
+    ],
+    "frontend_pages": [
+      {
+        "file": "index.html",
+        "description": "主頁",
+        "success": true,
+        "content_length": 8920,
+        "timestamp": "2025-09-21T11:30:00.307403"
+      },
+      {
+        "file": "extractors_showcase.html",
+        "description": "爬取器展示頁面",
+        "success": true,
+        "content_length": 24460,
+        "timestamp": "2025-09-21T11:30:00.307875"
+      }
+    ],
+    "configuration_files": [
+      {
+        "file": "config/proxy_sources.json",
+        "description": "代理來源配置",
+        "success": true,
+        "content_type": "JSON",
+        "keys": [
+          "proxy_sources",
+          "global_settings"
+        ],
+        "timestamp": "2025-09-21T11:30:00.308406"
+      },
+      {
+        "file": "requirements.txt",
+        "description": "Python依賴",
+        "success": true,
+        "content_length": 667,
+        "timestamp": "2025-09-21T11:30:00.308668"
+      }
+    ],
+    "extractor_modules": [
+      {
+        "file": "app/etl/extractors/factory.py",
+        "description": "爬取器工廠",
+        "success": true,
+        "content_length": 5843,
+        "has_class": true,
+        "has_import": true,
+        "has_function": true,
+        "timestamp": "2025-09-21T11:30:00.309654"
+      },
+      {
+        "file": "app/etl/extractors/base.py",
+        "description": "基礎爬取器",
+        "success": true,
+        "content_length": 9969,
+        "has_class": true,
+        "has_import": true,
+        "has_function": true,
+        "timestamp": "2025-09-21T11:30:00.309991"
+      },
+      {
+        "file": "app/etl/coordinator.py",
+        "description": "ETL協調器",
+        "success": true,
+        "content_length": 14728,
+        "has_class": true,
+        "has_import": true,
+        "has_function": true,
+        "timestamp": "2025-09-21T11:30:00.310273"
+      }
+    ]
+  }
+}
