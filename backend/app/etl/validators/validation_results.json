@@ -1,0 +1,690 @@
+{
+  "export_time": "2025-09-21T21:03:53.236264",
+  "total_results": 3,
+  "system_stats": {
+    "total_validations": 3,
+    "successful_validations": 0,
+    "failed_validations": 3,
+    "success_rate": 0.0,
+    "average_score": 39.67705790201823,
+    "uptime_seconds": 259.50275,
+    "uptime_human": "0:04:19"
+  },
+  "results": [
+    {
+      "proxy": {
+        "ip": "8.8.8.8",
+        "port": 8080,
+        "protocol": "http",
+        "country": "US",
+        "username": null,
+        "password": null,
+        "score": 36.7337703704834,
+        "is_active": false,
+        "anonymity_level": "unknown",
+        "response_time": 5.478893518447876,
+        "last_checked": "2025-09-21T21:03:53.233260",
+        "check_count": 1,
+        "success_count": 0,
+        "fail_count": 1,
+        "tags": [],
+        "metadata": {}
+      },
+      "success": false,
+      "score": 36.7337703704834,
+      "details": {
+        "connection": {
+          "success": false,
+          "response_time": 5.478893518447876,
+          "status_code": 0,
+          "error": ""
+        },
+        "anonymity": {
+          "success": true,
+          "proxy": "8.8.8.8:8080",
+          "real_ip": "61.69.168.64",
+          "proxy_info": {
+            "proxy_ip": null,
+            "headers": {},
+            "geo_info": {},
+            "proxy_detection": {},
+            "test_results": []
+          },
+          "anonymity_analysis": {
+            "ip_hidden": false,
+            "ip_leakage": false,
+            "proxy_ip_detected": false,
+            "real_ip_exposed": false,
+            "anonymity_score": 20
+          },
+          "header_leakage": {
+            "sensitive_headers_found": [],
+            "proxy_headers_found": [],
+            "header_leakage_score": 100,
+            "risk_level": "low"
+          },
+          "proxy_detection": {
+            "is_proxy_detected": false,
+            "proxy_type_indicators": [],
+            "proxy_software_signatures": [],
+            "anonymity_features": [
+              "No proxy indicators found"
+            ],
+            "proxy_detection_score": 100
+          },
+          "overall_assessment": {
+            "level": "transparent",
+            "score": 60.0,
+            "description": "透明代理 - 基本的匿名性",
+            "recommendations": [
+              "⚠️ 代理未能隱藏真實IP地址，建議更換代理服務器",
+              "🟡 匿名性有待改善，可考慮優化代理配置"
+            ]
+          },
+          "timestamp": "2025-09-21T21:00:27.215783"
+        },
+        "geolocation": {
+          "success": false,
+          "error": "無法通過代理獲取地理位置",
+          "proxy_location": null,
+          "real_location": {
+            "ip": "61.69.168.64",
+            "country": "Australia",
+            "country_code": "AU",
+            "region": "New South Wales",
+            "city": "Sydney",
+            "latitude": -33.7342,
+            "longitude": 150.8801,
+            "timezone": "Australia/Sydney",
+            "isp": "TPG Internet Pty Ltd",
+            "organization": "AAPT Limited"
+          }
+        },
+        "speed": {
+          "success": true,
+          "proxy": "8.8.8.8:8080",
+          "total_test_time": 259.46,
+          "connection_test": {
+            "success": false,
+            "connect_time": 0,
+            "status_code": 0,
+            "status": "error",
+            "error": ""
+          },
+          "response_time_test": {
+            "success": false,
+            "avg_response_time": 0,
+            "min_response_time": 0,
+            "max_response_time": 0,
+            "response_times": [],
+            "grade": "failed"
+          },
+          "download_speed_test": {
+            "success": false,
+            "avg_speed_bps": 0,
+            "avg_speed_kbps": 0,
+            "avg_speed_mbps": 0,
+            "download_speeds": [],
+            "grade": "failed"
+          },
+          "stability_test": {
+            "success": true,
+            "total_rounds": 3,
+            "total_tests": 12,
+            "success_rate": 0.0,
+            "avg_response_time_variance": 0,
+            "stability_grade": "poor",
+            "test_details": [
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                }
+              ],
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                }
+              ],
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                }
+              ]
+            ]
+          },
+          "overall_score": 10,
+          "timestamp": "2025-09-21T21:03:53.231277"
+        },
+        "response_time": 5.478893518447876
+      },
+      "timestamp": "2025-09-21T21:03:53.233260",
+      "duration": 259.499746,
+      "error": null
+    },
+    {
+      "proxy": {
+        "ip": "1.1.1.1",
+        "port": 8080,
+        "protocol": "https",
+        "country": "AU",
+        "username": null,
+        "password": null,
+        "score": 45.5,
+        "is_active": false,
+        "anonymity_level": "unknown",
+        "response_time": 0.022004365921020508,
+        "last_checked": "2025-09-21T20:59:38.055843",
+        "check_count": 1,
+        "success_count": 0,
+        "fail_count": 1,
+        "tags": [],
+        "metadata": {}
+      },
+      "success": false,
+      "score": 45.5,
+      "details": {
+        "connection": {
+          "success": false,
+          "response_time": 0.022004365921020508,
+          "status_code": 0,
+          "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+        },
+        "anonymity": {
+          "success": true,
+          "proxy": "1.1.1.1:8080",
+          "real_ip": "61.69.168.64",
+          "proxy_info": {
+            "proxy_ip": null,
+            "headers": {},
+            "geo_info": {},
+            "proxy_detection": {},
+            "test_results": []
+          },
+          "anonymity_analysis": {
+            "ip_hidden": false,
+            "ip_leakage": false,
+            "proxy_ip_detected": false,
+            "real_ip_exposed": false,
+            "anonymity_score": 20
+          },
+          "header_leakage": {
+            "sensitive_headers_found": [],
+            "proxy_headers_found": [],
+            "header_leakage_score": 100,
+            "risk_level": "low"
+          },
+          "proxy_detection": {
+            "is_proxy_detected": false,
+            "proxy_type_indicators": [],
+            "proxy_software_signatures": [],
+            "anonymity_features": [
+              "No proxy indicators found"
+            ],
+            "proxy_detection_score": 100
+          },
+          "overall_assessment": {
+            "level": "transparent",
+            "score": 60.0,
+            "description": "透明代理 - 基本的匿名性",
+            "recommendations": [
+              "⚠️ 代理未能隱藏真實IP地址，建議更換代理服務器",
+              "🟡 匿名性有待改善，可考慮優化代理配置"
+            ]
+          },
+          "timestamp": "2025-09-21T20:59:34.122019"
+        },
+        "geolocation": {
+          "success": false,
+          "error": "無法通過代理獲取地理位置",
+          "proxy_location": null,
+          "real_location": {
+            "ip": "61.69.168.64",
+            "country": "Australia",
+            "country_code": "AU",
+            "region": "New South Wales",
+            "city": "Sydney",
+            "latitude": -33.7342,
+            "longitude": 150.8801,
+            "timezone": "Australia/Sydney",
+            "isp": "TPG Internet Pty Ltd",
+            "organization": "AAPT Limited"
+          }
+        },
+        "speed": {
+          "success": true,
+          "proxy": "1.1.1.1:8080",
+          "total_test_time": 4.28,
+          "connection_test": {
+            "success": false,
+            "connect_time": 0,
+            "status_code": 0,
+            "status": "error",
+            "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+          },
+          "response_time_test": {
+            "success": false,
+            "avg_response_time": 0,
+            "min_response_time": 0,
+            "max_response_time": 0,
+            "response_times": [],
+            "grade": "failed"
+          },
+          "download_speed_test": {
+            "success": false,
+            "avg_speed_bps": 0,
+            "avg_speed_kbps": 0,
+            "avg_speed_mbps": 0,
+            "download_speeds": [],
+            "grade": "failed"
+          },
+          "stability_test": {
+            "success": true,
+            "total_rounds": 3,
+            "total_tests": 12,
+            "success_rate": 0.0,
+            "avg_response_time_variance": 0,
+            "stability_grade": "poor",
+            "test_details": [
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                }
+              ],
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                }
+              ],
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 1.1.1.1:8080 ssl:default [[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1010)]"
+                }
+              ]
+            ]
+          },
+          "overall_score": 10,
+          "timestamp": "2025-09-21T20:59:38.054842"
+        },
+        "response_time": 0.022004365921020508
+      },
+      "timestamp": "2025-09-21T20:59:38.055843",
+      "duration": 4.321318,
+      "error": null
+    },
+    {
+      "proxy": {
+        "ip": "208.67.222.222",
+        "port": 3128,
+        "protocol": "http",
+        "country": "CA",
+        "username": null,
+        "password": null,
+        "score": 36.79740333557129,
+        "is_active": false,
+        "anonymity_level": "unknown",
+        "response_time": 5.439122915267944,
+        "last_checked": "2025-09-21T21:03:53.232264",
+        "check_count": 1,
+        "success_count": 0,
+        "fail_count": 1,
+        "tags": [],
+        "metadata": {}
+      },
+      "success": false,
+      "score": 36.79740333557129,
+      "details": {
+        "connection": {
+          "success": false,
+          "response_time": 5.439122915267944,
+          "status_code": 0,
+          "error": ""
+        },
+        "anonymity": {
+          "success": true,
+          "proxy": "208.67.222.222:3128",
+          "real_ip": "61.69.168.64",
+          "proxy_info": {
+            "proxy_ip": null,
+            "headers": {},
+            "geo_info": {},
+            "proxy_detection": {},
+            "test_results": []
+          },
+          "anonymity_analysis": {
+            "ip_hidden": false,
+            "ip_leakage": false,
+            "proxy_ip_detected": false,
+            "real_ip_exposed": false,
+            "anonymity_score": 20
+          },
+          "header_leakage": {
+            "sensitive_headers_found": [],
+            "proxy_headers_found": [],
+            "header_leakage_score": 100,
+            "risk_level": "low"
+          },
+          "proxy_detection": {
+            "is_proxy_detected": false,
+            "proxy_type_indicators": [],
+            "proxy_software_signatures": [],
+            "anonymity_features": [
+              "No proxy indicators found"
+            ],
+            "proxy_detection_score": 100
+          },
+          "overall_assessment": {
+            "level": "transparent",
+            "score": 60.0,
+            "description": "透明代理 - 基本的匿名性",
+            "recommendations": [
+              "⚠️ 代理未能隱藏真實IP地址，建議更換代理服務器",
+              "🟡 匿名性有待改善，可考慮優化代理配置"
+            ]
+          },
+          "timestamp": "2025-09-21T21:00:27.216771"
+        },
+        "geolocation": {
+          "success": false,
+          "error": "無法通過代理獲取地理位置",
+          "proxy_location": null,
+          "real_location": {
+            "ip": "61.69.168.64",
+            "country": "Australia",
+            "country_code": "AU",
+            "region": "New South Wales",
+            "city": "Sydney",
+            "latitude": -33.7342,
+            "longitude": 150.8801,
+            "timezone": "Australia/Sydney",
+            "isp": "TPG Internet Pty Ltd",
+            "organization": "AAPT Limited"
+          }
+        },
+        "speed": {
+          "success": true,
+          "proxy": "208.67.222.222:3128",
+          "total_test_time": 259.45,
+          "connection_test": {
+            "success": false,
+            "connect_time": 0,
+            "status_code": 0,
+            "status": "error",
+            "error": ""
+          },
+          "response_time_test": {
+            "success": false,
+            "avg_response_time": 0,
+            "min_response_time": 0,
+            "max_response_time": 0,
+            "response_times": [],
+            "grade": "failed"
+          },
+          "download_speed_test": {
+            "success": false,
+            "avg_speed_bps": 0,
+            "avg_speed_kbps": 0,
+            "avg_speed_mbps": 0,
+            "download_speeds": [],
+            "grade": "failed"
+          },
+          "stability_test": {
+            "success": true,
+            "total_rounds": 3,
+            "total_tests": 12,
+            "success_rate": 0.0,
+            "avg_response_time_variance": 0,
+            "stability_grade": "poor",
+            "test_details": [
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                }
+              ],
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                }
+              ],
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": ""
+                }
+              ]
+            ]
+          },
+          "overall_score": 10,
+          "timestamp": "2025-09-21T21:03:53.230276"
+        },
+        "response_time": 5.439122915267944
+      },
+      "timestamp": "2025-09-21T21:03:53.232264",
+      "duration": 259.497739,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,465 @@
+{
+  "export_time": "2025-09-21T21:28:55.473437",
+  "total_results": 2,
+  "system_stats": {
+    "total_validations": 21,
+    "successful_validations": 0,
+    "failed_validations": 21,
+    "success_rate": 0.0,
+    "average_score": 39.4905048234122,
+    "uptime_seconds": 1365.001978,
+    "uptime_human": "0:22:45"
+  },
+  "results": [
+    {
+      "proxy": {
+        "ip": "10.0.0.1",
+        "port": 8080,
+        "protocol": "http",
+        "country": "US",
+        "username": null,
+        "password": null,
+        "score": 45.86489152908325,
+        "is_active": false,
+        "anonymity_level": "unknown",
+        "response_time": 2.067554235458374,
+        "last_checked": "2025-09-21T21:28:55.394480",
+        "check_count": 1,
+        "success_count": 0,
+        "fail_count": 1,
+        "tags": [],
+        "metadata": {}
+      },
+      "success": false,
+      "score": 45.86489152908325,
+      "details": {
+        "connection": {
+          "success": false,
+          "response_time": 2.067554235458374,
+          "status_code": 0,
+          "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+        },
+        "anonymity": {
+          "success": true,
+          "proxy": "10.0.0.1:8080",
+          "real_ip": "61.69.168.64",
+          "proxy_info": {
+            "proxy_ip": null,
+            "headers": {},
+            "geo_info": {},
+            "proxy_detection": {},
+            "test_results": []
+          },
+          "anonymity_analysis": {
+            "ip_hidden": false,
+            "ip_leakage": false,
+            "proxy_ip_detected": false,
+            "real_ip_exposed": false,
+            "anonymity_score": 20
+          },
+          "header_leakage": {
+            "sensitive_headers_found": [],
+            "proxy_headers_found": [],
+            "header_leakage_score": 100,
+            "risk_level": "low"
+          },
+          "proxy_detection": {
+            "is_proxy_detected": false,
+            "proxy_type_indicators": [],
+            "proxy_software_signatures": [],
+            "anonymity_features": [
+              "No proxy indicators found"
+            ],
+            "proxy_detection_score": 100
+          },
+          "overall_assessment": {
+            "level": "transparent",
+            "score": 60.0,
+            "description": "透明代理 - 基本的匿名性",
+            "recommendations": [
+              "⚠️ 代理未能隱藏真實IP地址，建議更換代理服務器",
+              "🟡 匿名性有待改善，可考慮優化代理配置"
+            ]
+          },
+          "timestamp": "2025-09-21T21:28:20.854192"
+        },
+        "geolocation": {
+          "success": false,
+          "error": "無法通過代理獲取地理位置",
+          "proxy_location": null,
+          "real_location": {
+            "ip": "61.69.168.64",
+            "country": "Australia",
+            "country_code": "AU",
+            "region": "New South Wales",
+            "city": "Sydney",
+            "latitude": -33.7342,
+            "longitude": 150.8801,
+            "timezone": "Australia/Sydney",
+            "isp": "TPG Internet Pty Ltd",
+            "organization": "AAPT Limited"
+          }
+        },
+        "speed": {
+          "success": true,
+          "proxy": "10.0.0.1:8080",
+          "total_test_time": 45.06,
+          "connection_test": {
+            "success": false,
+            "connect_time": 0,
+            "status_code": 0,
+            "status": "error",
+            "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+          },
+          "response_time_test": {
+            "success": false,
+            "avg_response_time": 0,
+            "min_response_time": 0,
+            "max_response_time": 0,
+            "response_times": [],
+            "grade": "failed"
+          },
+          "download_speed_test": {
+            "success": false,
+            "avg_speed_bps": 0,
+            "avg_speed_kbps": 0,
+            "avg_speed_mbps": 0,
+            "download_speeds": [],
+            "grade": "failed"
+          },
+          "stability_test": {
+            "success": true,
+            "total_rounds": 3,
+            "total_tests": 12,
+            "success_rate": 0.0,
+            "avg_response_time_variance": 0,
+            "stability_grade": "poor",
+            "test_details": [
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                }
+              ],
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                }
+              ],
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.1:8080 ssl:default [The remote computer refused the network connection]"
+                }
+              ]
+            ]
+          },
+          "overall_score": 10,
+          "timestamp": "2025-09-21T21:28:55.393464"
+        },
+        "response_time": 2.067554235458374
+      },
+      "timestamp": "2025-09-21T21:28:55.394480",
+      "duration": 45.066731,
+      "error": null
+    },
+    {
+      "proxy": {
+        "ip": "10.0.0.2",
+        "port": 8080,
+        "protocol": "https",
+        "country": "UK",
+        "username": null,
+        "password": null,
+        "score": 45.86689281463623,
+        "is_active": false,
+        "anonymity_level": "unknown",
+        "response_time": 2.0665535926818848,
+        "last_checked": "2025-09-21T21:28:55.472437",
+        "check_count": 1,
+        "success_count": 0,
+        "fail_count": 1,
+        "tags": [],
+        "metadata": {}
+      },
+      "success": false,
+      "score": 45.86689281463623,
+      "details": {
+        "connection": {
+          "success": false,
+          "response_time": 2.0665535926818848,
+          "status_code": 0,
+          "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+        },
+        "anonymity": {
+          "success": true,
+          "proxy": "10.0.0.2:8080",
+          "real_ip": "61.69.168.64",
+          "proxy_info": {
+            "proxy_ip": null,
+            "headers": {},
+            "geo_info": {},
+            "proxy_detection": {},
+            "test_results": []
+          },
+          "anonymity_analysis": {
+            "ip_hidden": false,
+            "ip_leakage": false,
+            "proxy_ip_detected": false,
+            "real_ip_exposed": false,
+            "anonymity_score": 20
+          },
+          "header_leakage": {
+            "sensitive_headers_found": [],
+            "proxy_headers_found": [],
+            "header_leakage_score": 100,
+            "risk_level": "low"
+          },
+          "proxy_detection": {
+            "is_proxy_detected": false,
+            "proxy_type_indicators": [],
+            "proxy_software_signatures": [],
+            "anonymity_features": [
+              "No proxy indicators found"
+            ],
+            "proxy_detection_score": 100
+          },
+          "overall_assessment": {
+            "level": "transparent",
+            "score": 60.0,
+            "description": "透明代理 - 基本的匿名性",
+            "recommendations": [
+              "⚠️ 代理未能隱藏真實IP地址，建議更換代理服務器",
+              "🟡 匿名性有待改善，可考慮優化代理配置"
+            ]
+          },
+          "timestamp": "2025-09-21T21:28:20.871203"
+        },
+        "geolocation": {
+          "success": false,
+          "error": "無法通過代理獲取地理位置",
+          "proxy_location": null,
+          "real_location": {
+            "ip": "61.69.168.64",
+            "country": "Australia",
+            "country_code": "AU",
+            "region": "New South Wales",
+            "city": "Sydney",
+            "latitude": -33.7342,
+            "longitude": 150.8801,
+            "timezone": "Australia/Sydney",
+            "isp": "TPG Internet Pty Ltd",
+            "organization": "AAPT Limited"
+          }
+        },
+        "speed": {
+          "success": true,
+          "proxy": "10.0.0.2:8080",
+          "total_test_time": 45.14,
+          "connection_test": {
+            "success": false,
+            "connect_time": 0,
+            "status_code": 0,
+            "status": "error",
+            "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+          },
+          "response_time_test": {
+            "success": false,
+            "avg_response_time": 0,
+            "min_response_time": 0,
+            "max_response_time": 0,
+            "response_times": [],
+            "grade": "failed"
+          },
+          "download_speed_test": {
+            "success": false,
+            "avg_speed_bps": 0,
+            "avg_speed_kbps": 0,
+            "avg_speed_mbps": 0,
+            "download_speeds": [],
+            "grade": "failed"
+          },
+          "stability_test": {
+            "success": true,
+            "total_rounds": 3,
+            "total_tests": 12,
+            "success_rate": 0.0,
+            "avg_response_time_variance": 0,
+            "stability_grade": "poor",
+            "test_details": [
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                }
+              ],
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                }
+              ],
+              [
+                {
+                  "url": "https://www.google.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.baidu.com",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://httpbin.org/delay/1",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                },
+                {
+                  "url": "https://www.cloudflare.com/cdn-cgi/trace",
+                  "success": false,
+                  "response_time": 0,
+                  "status_code": 0,
+                  "error": "Cannot connect to host 10.0.0.2:8080 ssl:default [The remote computer refused the network connection]"
+                }
+              ]
+            ]
+          },
+          "overall_score": 10,
+          "timestamp": "2025-09-21T21:28:55.471419"
+        },
+        "response_time": 2.0665535926818848
+      },
+      "timestamp": "2025-09-21T21:28:55.472437",
+      "duration": 45.144688,
+      "error": null
+    }
+  ]
+}

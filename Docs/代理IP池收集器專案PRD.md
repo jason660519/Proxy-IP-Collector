@@ -1,4 +1,17 @@
-# 代理 IP 池收集器 (Proxy IP Pool Collector) - 整合專案文檔
+# 代理 IP 池收集器 (Proxy IP Pool Collector) - 專案PRD
+
+## 版本更新歷程
+
+| 版本 | 更新日期 | 更新內容 | 負責人 |
+|------|----------|----------|--------|
+| v1.0 | 2024-12-19 | 初始版本建立，基礎架構設計 | AI Assistant |
+| v2.0 | 2024-12-21 | 新增差異化ETL處理流程規範，完善8個數據源技術規格 | AI Assistant |
+| v2.1 | 2024-12-21 | 新增URL專用爬蟲程式設計原則，實現自動化IP驗證評分機制 | AI Assistant |
+
+## 文件狀態
+- **當前版本**: v2.1
+- **更新狀態**: 持續更新中
+- **最後審核**: 2024-12-21
 
 ## 1. 專案概述
 
@@ -33,6 +46,7 @@
 ##### 2.1.1.1 來源網站詳細特性分析
 
 **1. 89ip.cn**
+
 - **網站特性**: 國內知名代理IP發布平台，採用傳統HTML表格展示
 - **更新頻率**: 30分鐘
 - **頁面範圍**: 1-100頁（動態生成，實際頁數可能變化）
@@ -43,6 +57,7 @@
 - **ETL處理**: 直接提取表格數據，標準化字段格式，過濾無效IP
 
 **2. 快代理 (kuaidaili.com)**
+
 - **網站特性**: 分為國內代理(intr)和海外代理(inha)兩個子站點
 - **更新頻率**: 2天
 - **頁面範圍**: 單頁面（動態加載）
@@ -53,6 +68,7 @@
 - **ETL處理**: 需要等待頁面完全加載，提取動態生成的表格數據
 
 **3. GeoNode API (proxylist.geonode.com)**
+
 - **網站特性**: 提供標準化的JSON API接口
 - **更新頻率**: 30分鐘
 - **頁面範圍**: 1-24頁（API分頁）
@@ -63,6 +79,7 @@
 - **ETL處理**: 直接解析JSON，數據質量高，需要字段映射
 
 **4. ProxyDB.net**
+
 - **網站特性**: 基於偏移量(offset)的分頁系統
 - **更新頻率**: 48小時
 - **頁面範圍**: 0-4620 offset（步長30）
@@ -73,6 +90,7 @@
 - **ETL處理**: 循環請求不同offset，提取表格數據，需要去重處理
 
 **5. ProxyNova.com**
+
 - **網站特性**: 按國家分類的多頁面結構
 - **更新頻率**: 24小時
 - **頁面範圍**: 多個國家頁面（country-all, country-us, country-gb等）
@@ -83,6 +101,7 @@
 - **ETL處理**: 需要遍歷所有國家頁面，合併數據，按國家分類存儲
 
 **6. Spys.one**
+
 - **網站特性**: 重度依賴JavaScript渲染，有複雜的反爬蟲機制
 - **更新頻率**: 24小時
 - **頁面範圍**: 單頁面（大量數據）
@@ -93,6 +112,7 @@
 - **ETL處理**: 需要完整的瀏覽器環境，等待JavaScript執行完成，提取渲染後的數據
 
 **7. Free-Proxy-List.net**
+
 - **網站特性**: 經典的免費代理列表，有多個子頁面
 - **更新頻率**: 30分鐘
 - **頁面範圍**: 多個子頁面（/proxy-list/, /proxy-list/2/等）
@@ -104,16 +124,16 @@
 
 ##### 2.1.1.2 統一的來源特性對照表
 
-| 網站 | 更新頻率 | 頁面範圍 | 每頁數量 | 數據格式 | 解析方法 | 反爬蟲等級 | 特殊要求 |
-|------|----------|----------|----------|----------|----------|------------|----------|
-| 89ip.cn | 30分鐘 | 1-100頁 | ~40個 | HTML表格 | BeautifulSoup | 中等 | 分頁處理 |
-| kuaidaili-intr | 2天 | 單頁面 | 15-25個 | HTML+JS | Selenium/Playwright | 強 | 動態加載等待 |
-| kuaidaili-inha | 2天 | 單頁面 | 15-25個 | HTML+JS | Selenium/Playwright | 強 | 動態加載等待 |
-| geonode-api | 30分鐘 | 1-24頁 | ~100個 | JSON API | JSON解析 | 低 | API密鑰管理 |
-| proxydb.net | 48小時 | 0-4620 offset | ~30個 | HTML表格 | BeautifulSoup | 中等 | 偏移量分頁 |
-| proxynova.com | 24小時 | 多國家頁面 | 5-35個 | HTML+JS | BeautifulSoup+JS | 強 | 多國家遍歷 |
-| spys.one | 24小時 | 單頁面 | ~500個 | JS渲染 | Playwright必需 | 非常強 | 完整瀏覽器環境 |
-| free-proxy-list.net | 30分鐘 | 多子頁面 | 50-150個 | HTML表格 | BeautifulSoup | 低-中等 | 子頁面遍歷 |
+| 網站                | 更新頻率 | 頁面範圍      | 每頁數量 | 數據格式 | 解析方法            | 反爬蟲等級 | 特殊要求       |
+| ------------------- | -------- | ------------- | -------- | -------- | ------------------- | ---------- | -------------- |
+| 89ip.cn             | 30分鐘   | 1-100頁       | ~40個    | HTML表格 | BeautifulSoup       | 中等       | 分頁處理       |
+| kuaidaili-intr      | 2天      | 單頁面        | 15-25個  | HTML+JS  | Selenium/Playwright | 強         | 動態加載等待   |
+| kuaidaili-inha      | 2天      | 單頁面        | 15-25個  | HTML+JS  | Selenium/Playwright | 強         | 動態加載等待   |
+| geonode-api         | 30分鐘   | 1-24頁        | ~100個   | JSON API | JSON解析            | 低         | API密鑰管理    |
+| proxydb.net         | 48小時   | 0-4620 offset | ~30個    | HTML表格 | BeautifulSoup       | 中等       | 偏移量分頁     |
+| proxynova.com       | 24小時   | 多國家頁面    | 5-35個   | HTML+JS  | BeautifulSoup+JS    | 強         | 多國家遍歷     |
+| spys.one            | 24小時   | 單頁面        | ~500個   | JS渲染   | Playwright必需      | 非常強     | 完整瀏覽器環境 |
+| free-proxy-list.net | 30分鐘   | 多子頁面      | 50-150個 | HTML表格 | BeautifulSoup       | 低-中等    | 子頁面遍歷     |
 
 ##### 2.1.1.3 專用爬蟲程式設計原則
 
@@ -123,17 +143,17 @@
 ```python
 class BaseProxyExtractor(ABC):
     """代理提取器基類"""
-    
+  
     def __init__(self, source_config: Dict[str, Any]):
         self.name = source_config['name']
         self.config = source_config
         self.rate_limiter = RateLimiter(source_config.get('rate_limit', 60))
-        
+      
     @abstractmethod
     async def extract_proxies(self) -> List[Dict[str, Any]]:
         """提取代理IP數據"""
         pass
-        
+      
     @abstractmethod
     def get_source_info(self) -> Dict[str, Any]:
         """獲取來源信息"""
@@ -149,6 +169,7 @@ class BaseProxyExtractor(ABC):
 - **分頁處理型**: 實現智能分頁遍歷算法
 
 **3. 反爬蟲應對機制**
+
 - 請求頻率控制（每個來源獨立配置）
 - User-Agent輪換
 - IP代理池（自我循環使用）
@@ -158,12 +179,14 @@ class BaseProxyExtractor(ABC):
 ##### 2.1.1.4 ETL處理流程設計
 
 **提取階段 (Extract)**
+
 1. **前置檢查**: 驗證來源可用性、檢查速率限制
 2. **數據獲取**: 根據來源特性選擇合適的爬取策略
 3. **原始存儲**: 保存原始HTML/JSON數據用於調試和重處理
 4. **錯誤處理**: 記錄爬取失敗原因，觸告警機制
 
 **轉換階段 (Transform)**
+
 1. **格式解析**: 根據數據格式選擇對應的解析器
 2. **數據清洗**: 過濾無效IP、標準化端口格式、驗證IP格式
 3. **字段映射**: 將不同來源的字段統一映射到標準格式
@@ -171,12 +194,14 @@ class BaseProxyExtractor(ABC):
 5. **去重處理**: 基於IP+端口組合進行全局去重
 
 **加載階段 (Load)**
+
 1. **批量寫入**: 使用批量操作提高數據庫寫入效率
 2. **索引更新**: 更新搜索索引和統計信息
 3. **版本控制**: 記錄數據版本和處理歷史
 4. **成功指標**: 統計成功加載的代理數量和質量指標
 
 **標準化數據結構**
+
 ```json
 {
   "ip": "192.168.1.1",
@@ -196,6 +221,245 @@ class BaseProxyExtractor(ABC):
 ```
 
 這種細緻的來源分析和專門的處理流程設計，確保了每個代理IP來源都能被最有效地利用，同時保持整個系統的穩定性和可擴展性。
+
+##### 2.1.1.5 差異化ETL處理流程規範
+
+為了確保不同URL來源的數據能夠被正確處理和存儲，制定以下差異化ETL處理流程規範：
+
+**1. 原始數據(Raw Data)管理規範**
+
+*原始數據保留要求*：
+
+- 必須完整保留來源網站返回的所有原始欄位和數據結構
+- 不得刪除、修改或過濾任何原始數據內容
+- 需要額外記錄採集時間戳、來源URL、HTTP狀態碼等元數據
+
+*存儲路徑格式*：
+
+```
+C:\proxy_collector\raw_data\${source_name}\${date}\${timestamp}_${sequence}.json
+```
+
+- `${source_name}`: 數據源名稱（如：89ip、kuaidaili、geonode）
+- `${date}`: 採集日期，格式為YYYYMMDD
+- `${timestamp}`: 精確到毫秒的時間戳
+- `${sequence}`: 同一數據源在同一天內的序號
+
+*文件格式要求*：
+
+```json
+{
+  "metadata": {
+    "source": "89ip.cn",
+    "url": "https://www.89ip.cn/index_1.html",
+    "collected_at": "2024-12-19T14:30:25.123Z",
+    "http_status": 200,
+    "collector_version": "v2.1.0",
+    "raw_size_bytes": 15360
+  },
+  "raw_data": {
+    // 原始網站返回的完整數據
+    "html_content": "<table>...</table>",
+    "headers": {},
+    "cookies": {}
+  }
+}
+```
+
+**2. 處理後數據(Clean Data)規範**
+
+*必要欄位要求*：
+
+- 僅保留 `ip_address`和 `port_number`兩個必要欄位
+- 所有其他欄位必須移除，確保數據最小化
+- 需要添加處理時間戳和數據版本號
+
+*標準化字段命名*：
+
+```json
+{
+  "ip_address": "192.168.1.1",     // 標準化IP地址欄位名
+  "port_number": 8080,             // 標準化端口欄位名
+  "processed_at": "2024-12-19T14:31:00.000Z",
+  "data_version": "v1.0",
+  "source": "89ip.cn"
+}
+```
+
+*存儲路徑格式*：
+
+```
+C:\proxy_collector\clean_data\${source_type}\${timestamp}\clean_data.json
+```
+
+- `${source_type}`: 數據源類型（html_table、json_api、js_rendered）
+- `${timestamp}`: 處理完成的時間戳
+
+**3. 數據流轉示意圖**
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   原始網站數據   │───▶│   原始數據存儲    │───▶│   數據清洗處理    │
+│  (HTML/JSON)    │    │  (Raw Storage)  │    │  (Clean Process)│
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         │                       │                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  數據源配置     │    │  錯誤日誌記錄    │    │   清潔數據存儲   │
+│ (Source Config)│    │  (Error Log)    │    │ (Clean Storage) │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         └───────────────────────┼───────────────────────┘
+                                 ▼
+                        ┌─────────────────┐
+                        │  API接口提供    │
+                        │  (API Service)  │
+                        └─────────────────┘
+```
+
+**4. 各處理階段數據樣本示例**
+
+*原始數據樣本*（89ip.cn）：
+
+```json
+{
+  "metadata": {
+    "source": "89ip.cn",
+    "url": "https://www.89ip.cn/index_1.html",
+    "collected_at": "2024-12-19T14:30:25.123Z"
+  },
+  "raw_data": {
+    "html_content": "<table class=\"layui-table\">...</table>",
+    "proxy_count": 40,
+    "page_number": 1
+  }
+}
+```
+
+*清潔數據樣本*：
+
+```json
+[
+  {
+    "ip_address": "192.168.1.100",
+    "port_number": 8080,
+    "processed_at": "2024-12-19T14:31:00.000Z",
+    "data_version": "v1.0",
+    "source": "89ip.cn"
+  },
+  {
+    "ip_address": "10.0.0.50",
+    "port_number": 3128,
+    "processed_at": "2024-12-19T14:31:00.000Z",
+    "data_version": "v1.0",
+    "source": "89ip.cn"
+  }
+]
+```
+
+**5. 前端網頁API接口數據格式**
+
+*代理列表API* - `/api/v1/proxies`：
+
+```json
+{
+  "status": "success",
+  "data": {
+    "proxies": [
+      {
+        "id": "proxy_123456",
+        "ip_address": "192.168.1.100",
+        "port_number": 8080,
+        "protocol": "http",
+        "anonymity_level": "high",
+        "country": "CN",
+        "response_time_ms": 1200,
+        "validation_rate": 0.95,
+        "last_verified": "2024-12-19T14:25:00Z",
+        "source": "89ip.cn",
+        "status": "active"
+      }
+    ],
+    "pagination": {
+      "total": 1523,
+      "page": 1,
+      "per_page": 20,
+      "total_pages": 77
+    },
+    "statistics": {
+      "total_active": 1523,
+      "by_protocol": {
+        "http": 892,
+        "https": 456,
+        "socks4": 125,
+        "socks5": 50
+      },
+      "by_anonymity": {
+        "high": 823,
+        "medium": 456,
+        "low": 244
+      }
+    }
+  },
+  "timestamp": "2024-12-19T14:31:30.123Z"
+}
+```
+
+*數據源狀態API* - `/api/v1/sources/status`：
+
+```json
+{
+  "status": "success",
+  "data": {
+    "sources": [
+      {
+        "name": "89ip.cn",
+        "type": "html_table",
+        "status": "active",
+        "last_fetch": "2024-12-19T14:30:25Z",
+        "fetch_count": 40,
+        "success_rate": 0.98,
+        "average_response_time_ms": 1200
+      },
+      {
+        "name": "geonode-api",
+        "type": "json_api",
+        "status": "active",
+        "last_fetch": "2024-12-19T14:25:10Z",
+        "fetch_count": 100,
+        "success_rate": 0.95,
+        "average_response_time_ms": 800
+      }
+    ],
+    "summary": {
+      "total_sources": 8,
+      "active_sources": 7,
+      "failed_sources": 1,
+      "overall_success_rate": 0.96
+    }
+  }
+}
+```
+
+**6. 路徑規範總結**
+
+所有路徑必須採用絕對路徑表示法：
+
+- **Windows系統**: `C:\proxy_collector\{data_type}\{source}\{date}\{file}.json`
+- **Linux系統**: `/opt/proxy_collector/{data_type}/{source}/{date}/{file}.json`
+- **環境變量配置**: 通過 `PROXY_COLLECTOR_DATA_PATH`環境變量統一配置
+
+**7. 質量控制檢查點**
+
+每個ETL流程必須經過以下質量檢查：
+
+1. **原始數據完整性檢查**: 驗證所有必需欄位存在
+2. **IP地址格式驗證**: 使用正則表達式驗證IPv4格式
+3. **端口範圍檢查**: 確保端口在1-65535有效範圍內
+4. **重複數據檢測**: 基於IP+端口組合進行去重
+5. **數據一致性驗證**: 清潔數據與原始數據的數量對比
+
+這套差異化ETL處理流程規範確保了不同來源的代理IP數據能夠被標準化處理，同時保持數據的完整性和可追溯性。
 
 #### 2.1.2 爬取模組技術要求
 
@@ -264,7 +528,7 @@ class BaseProxyExtractor(ABC):
 
 ### 3.1 整體架構設計
 
-基於完整的分層架構設計：
+基於完整的分層架構設計，採用微服務架構模式：
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -286,6 +550,106 @@ class BaseProxyExtractor(ABC):
 │  │ (快取+會話)  │ (關係數據)   │ (文檔數據)   │ (日誌+導出) │  │
 │  └──────────────┴──────────────┴──────────────┴──────────────┘  │
 └─────────────────────────────────────────────────────────────────┘
+```
+
+#### 3.1.1 技術棧詳細規格
+
+**後端技術棧**
+- **框架**: FastAPI v0.104.1 (異步Web框架)
+- **語言**: Python 3.11+ (類型提示和異步支持)
+- **依賴管理**: UV (現代Python包管理器)
+- **虛擬環境**: UV venv (高性能虛擬環境)
+
+**數據存儲**
+- **主數據庫**: PostgreSQL 15+ (結構化數據)
+- **快取層**: Redis 7+ (高性能緩存)
+- **文檔存儲**: MongoDB 6+ (非結構化數據)
+- **文件存儲**: 本地文件系統 (原始數據和日誌)
+
+**爬蟲技術**
+- **HTTP客戶端**: aiohttp 3.9+ (異步HTTP請求)
+- **HTML解析**: BeautifulSoup4 4.12+ (HTML解析)
+- **瀏覽器自動化**: Playwright 1.40+ (JavaScript渲染)
+- **數據提取**: lxml 4.9+ (高性能XML/HTML解析)
+
+**監控和日誌**
+- **日誌框架**: structlog 23.0+ (結構化日誌)
+- **監控**: Prometheus + Grafana (指標監控)
+- **錯誤追蹤**: Sentry (錯誤監控)
+
+#### 3.1.2 架構核心組件
+
+**1. 統一服務啟動器 (Unified Server)**
+```python
+class UnifiedServer:
+    """統一服務啟動器，管理所有後端服務"""
+    
+    def __init__(self):
+        self.services = {
+            'api': FastAPIServer(),      # API服務
+            'etl': ETLCoordinator(),     # ETL協調器
+            'scheduler': TaskScheduler(), # 任務調度器
+            'validator': ProxyValidator() # 代理驗證器
+        }
+    
+    async def start_all(self):
+        """啟動所有服務"""
+        for service_name, service in self.services.items():
+            await service.start()
+```
+
+**2. ETL協調器 (ETL Coordinator)**
+```python
+class ETLCoordinator:
+    """ETL流程協調器，管理所有數據提取器"""
+    
+    def __init__(self):
+        self.extractors = ExtractorFactory.create_all()
+        self.transformers = TransformerFactory.create_all()
+        self.loaders = LoaderFactory.create_all()
+    
+    async def run_etl_pipeline(self, source_name: str):
+        """運行指定數據源的ETL流程"""
+        # Extract階段
+        raw_data = await self.extractors[source_name].extract()
+        
+        # Transform階段
+        clean_data = await self.transformers[source_name].transform(raw_data)
+        
+        # Load階段
+        await self.loaders[source_name].load(clean_data)
+```
+
+**3. 代理驗證器 (Proxy Validator)**
+```python
+class ProxyValidator:
+    """代理IP驗證器，提供自動化驗證和評分"""
+    
+    async def validate_proxy(self, proxy: ProxyData) -> ValidationResult:
+        """驗證單個代理"""
+        # 連接測試
+        connectivity_score = await self.test_connectivity(proxy)
+        
+        # 匿名度測試
+        anonymity_score = await self.test_anonymity(proxy)
+        
+        # 速度測試
+        speed_score = await self.test_speed(proxy)
+        
+        # 綜合評分
+        overall_score = self.calculate_overall_score(
+            connectivity_score, anonymity_score, speed_score
+        )
+        
+        return ValidationResult(
+            proxy=proxy,
+            overall_score=overall_score,
+            details={
+                'connectivity': connectivity_score,
+                'anonymity': anonymity_score,
+                'speed': speed_score
+            }
+        )
 ```
 
 ### 3.2 架構分層說明
