@@ -3,7 +3,7 @@
 """
 import asyncio
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 from typing import List, Dict, Any, Optional, Tuple
 import aiohttp
 from aiohttp import ClientTimeout, ClientError
@@ -126,7 +126,7 @@ class ProxyValidator:
                     headers_sent=self.default_headers,
                     headers_received=headers or {},
                     status_code=status_code,
-                    checked_at=datetime.utcnow()
+                    checked_at=datetime.now(timezone.utc)
                 )
                 
                 # 更新代理狀態
@@ -141,7 +141,7 @@ class ProxyValidator:
                     is_successful=False,
                     error_message=str(e),
                     check_type="http_test",
-                    checked_at=datetime.utcnow()
+                    checked_at=datetime.now(timezone.utc)
                 )
     
     def _build_proxy_url(self, proxy: Proxy) -> str:
@@ -228,13 +228,13 @@ class ProxyValidator:
         try:
             if success:
                 proxy.status = "active"
-                proxy.last_success = datetime.utcnow()
+                proxy.last_success = datetime.now(timezone.utc)
                 if response_time:
                     proxy.response_time = response_time
             else:
                 proxy.status = "inactive"
             
-            proxy.last_checked = datetime.utcnow()
+            proxy.last_checked = datetime.now(timezone.utc)
             self.db_session.commit()
             
         except Exception as e:
@@ -288,8 +288,8 @@ class ProxyValidator:
                 "failed": 0,
                 "results": [],
                 "duration": 0,
-                "started_at": datetime.utcnow(),
-                "completed_at": datetime.utcnow()
+                "started_at": datetime.now(timezone.utc),
+                "completed_at": datetime.now(timezone.utc)
             }
         
         # 執行驗證
@@ -312,7 +312,7 @@ class ProxyValidator:
             "results": results,
             "duration": duration,
             "started_at": datetime.fromtimestamp(start_time),
-            "completed_at": datetime.utcnow()
+            "completed_at": datetime.now(timezone.utc)
         }
     
     async def get_proxy_stats(self) -> Dict[str, Any]:

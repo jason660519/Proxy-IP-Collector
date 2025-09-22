@@ -1,10 +1,10 @@
 """
 代理IP數據模型
 """
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, Dict, Any
 from sqlalchemy import Column, String, Integer, Float, DateTime, Boolean, JSON, Index, Text
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 import uuid
 import os
 
@@ -35,14 +35,14 @@ class Proxy(Base):
     status = Column(String(20), default="inactive", index=True, comment="狀態")
     response_time = Column(Integer, default=0, comment="響應時間(ms)")
     success_rate = Column(Float, default=0.0, comment="成功率")
-    last_checked = Column(DateTime, default=datetime.utcnow, comment="最後檢查時間")
+    last_checked = Column(DateTime, default=lambda: datetime.now(timezone.utc), comment="最後檢查時間")
     last_success = Column(DateTime, comment="最後成功時間")
     source = Column(String(100), comment="來源")
     quality_score = Column(Float, default=0.0, comment="質量評分")
     extra_metadata = Column(JSON, default=dict, comment="額外元數據")
     is_active = Column(Boolean, default=True, index=True, comment="是否啟用")
-    created_at = Column(DateTime, default=datetime.utcnow, comment="創建時間")
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="更新時間")
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), comment="創建時間")
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), comment="更新時間")
     
     # 複合索引
     __table_args__ = (
@@ -66,8 +66,8 @@ class ProxySource(Base):
     last_crawl = Column(DateTime, comment="最後爬取時間")
     crawl_interval = Column(Integer, default=3600, comment="爬取間隔(秒)")
     success_rate = Column(Float, default=0.0, comment="成功率")
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
 
 class ProxyCheckResult(Base):
@@ -84,7 +84,7 @@ class ProxyCheckResult(Base):
     headers_sent = Column(JSON, default=dict, comment="發送的請求頭")
     headers_received = Column(JSON, default=dict, comment="接收的響應頭")
     status_code = Column(Integer, comment="HTTP狀態碼")
-    checked_at = Column(DateTime, default=datetime.utcnow, index=True, comment="檢查時間")
+    checked_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), index=True, comment="檢查時間")
     
     __table_args__ = (
         Index('idx_check_result_proxy_time', 'proxy_id', 'checked_at'),
@@ -102,7 +102,7 @@ class ProxyCrawlLog(Base):
     success = Column(Boolean, nullable=False, comment="是否成功")
     error_message = Column(Text, comment="錯誤信息")
     extra_metadata = Column(JSON, default=dict, comment="元數據")
-    crawled_at = Column(DateTime, default=datetime.utcnow, index=True, comment="爬取時間")
+    crawled_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), index=True, comment="爬取時間")
     
     __table_args__ = (
         Index('idx_crawl_log_source_time', 'source', 'crawled_at'),
@@ -124,7 +124,7 @@ class ETLTask(Base):
     completed_at = Column(DateTime, comment="完成時間")
     duration = Column(Integer, comment="執行時長(秒)")
     created_by = Column(String(100), comment="創建者")
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     
     __table_args__ = (
         Index('idx_etl_task_status_type', 'status', 'task_type'),

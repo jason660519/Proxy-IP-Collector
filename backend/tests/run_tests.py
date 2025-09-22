@@ -271,6 +271,10 @@ class TestRunner:
         print(f"失敗: {result['failed']}")
         print(f"跳過: {result['skipped']}")
         
+        # 計算通過率（防止除零錯誤）
+        pass_rate = (result['passed'] / result['total_tests'] * 100) if result['total_tests'] > 0 else 0.0
+        print(f"通過率: {pass_rate:.1f}%")
+        
         if result['success']:
             print("✅ 測試通過")
         else:
@@ -345,7 +349,8 @@ class TestRunner:
         print(f"總失敗: {overall_report['summary']['total_failed']}")
         print(f"總跳過: {overall_report['summary']['total_skipped']}")
         print(f"總耗時: {overall_report['summary']['total_duration']:.2f}秒")
-        print(f"成功率: {(overall_report['summary']['total_passed'] / overall_report['summary']['total_tests'] * 100):.1f}%")
+        success_rate = (overall_report['summary']['total_passed'] / overall_report['summary']['total_tests'] * 100) if overall_report['summary']['total_tests'] > 0 else 0.0
+        print(f"成功率: {success_rate:.1f}%")
         print(f"報告文件: {report_file}")
         print(f"{'='*80}\n")
     

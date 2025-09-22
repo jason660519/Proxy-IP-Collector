@@ -33,7 +33,7 @@ class TestProxyValidationIntegration:
         return StandaloneValidationSystem()
     
     @pytest.mark.asyncio
-    async def test_proxy_lifecycle_integration(self, proxy_service, validation_system):
+    async def test_proxy_lifecycle_integration(self, proxy_service, validation_system, mock_db_connection):
         """測試代理完整生命週期集成"""
         # 1. 創建代理
         proxy_data = {
@@ -44,18 +44,18 @@ class TestProxyValidationIntegration:
             "password": "test_pass"
         }
         
+        # 設置模擬返回值
+        mock_db_connection.execute.return_value.fetchone.return_value = {
+            "id": 1,
+            **proxy_data,
+            "status": "pending",
+            "score": 0.0,
+            "created_at": datetime.now(),
+            "updated_at": datetime.now()
+        }
+        
         with patch('app.services.proxy_service.get_db_connection') as mock_db_conn:
-            mock_conn = AsyncMock()
-            mock_conn.execute.return_value = AsyncMock()
-            mock_conn.execute.return_value.fetchone.return_value = {
-                "id": 1,
-                **proxy_data,
-                "status": "pending",
-                "score": 0.0,
-                "created_at": datetime.now(),
-                "updated_at": datetime.now()
-            }
-            mock_db_conn.return_value.__aenter__.return_value = mock_conn
+            mock_db_conn.return_value.__aenter__.return_value = mock_db_connection
             
             created_proxy = await proxy_service.create_proxy(proxy_data)
             assert created_proxy is not None
@@ -69,18 +69,18 @@ class TestProxyValidationIntegration:
         assert "score" in validation_result
         
         # 3. 更新代理狀態
+        # 更新模擬返回值
+        mock_db_connection.execute.return_value.fetchone.return_value = {
+            "id": 1,
+            **proxy_data,
+            "status": "active" if validation_result["is_valid"] else "failed",
+            "score": validation_result["score"],
+            "created_at": datetime.now(),
+            "updated_at": datetime.now()
+        }
+        
         with patch('app.services.proxy_service.get_db_connection') as mock_db_conn:
-            mock_conn = AsyncMock()
-            mock_conn.execute.return_value = AsyncMock()
-            mock_conn.execute.return_value.fetchone.return_value = {
-                "id": 1,
-                **proxy_data,
-                "status": "active" if validation_result["is_valid"] else "failed",
-                "score": validation_result["score"],
-                "created_at": datetime.now(),
-                "updated_at": datetime.now()
-            }
-            mock_db_conn.return_value.__aenter__.return_value = mock_conn
+            mock_db_conn.return_value.__aenter__.return_value = mock_db_connection
             
             update_data = {
                 "status": "active" if validation_result["is_valid"] else "failed",

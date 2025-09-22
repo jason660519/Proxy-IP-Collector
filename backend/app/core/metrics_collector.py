@@ -7,7 +7,7 @@ import time
 import psutil
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 
 try:
     from prometheus_client import Counter, Histogram, Gauge, Info, generate_latest, CONTENT_TYPE_LATEST
@@ -112,7 +112,7 @@ class MetricsCollector:
             load_avg = psutil.getloadavg() if hasattr(psutil, 'getloadavg') else (0, 0, 0)
             
             metrics = SystemMetrics(
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(timezone.utc),
                 cpu_usage=cpu_usage,
                 memory_usage=memory.percent,
                 disk_usage=disk.percent,
@@ -156,7 +156,7 @@ class MetricsCollector:
         """收集應用程序指標"""
         try:
             metrics = ApplicationMetrics(
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(timezone.utc),
                 total_requests=total_requests,
                 active_connections=active_connections,
                 response_time_avg=response_time_avg,

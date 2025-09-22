@@ -1,0 +1,60 @@
+{
+  "timestamp": "20250922_183716",
+  "summary": {
+    "total_tests": 0,
+    "total_passed": 0,
+    "total_failed": 0,
+    "total_skipped": 0,
+    "total_duration": 0.11000227928161621
+  },
+  "details": {
+    "unit": {
+      "success": false,
+      "stdout": "",
+      "stderr": "C:\\Users\\a0922\\AppData\\Roaming\\uv\\python\\cpython-3.12.9-windows-x86_64-none\\python.exe: No module named pytest\n",
+      "total_tests": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "failures": [],
+      "test_type": "unit",
+      "duration": 0.03700065612792969,
+      "report_name": "unit_test_report_20250922_183716",
+      "command": "python -m pytest C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\tests\\unit -k test_*.py -m unit -v --cov=app --cov-report=html --cov-report=term-missing --cov-report=html:C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\unit_test_report_20250922_183716_coverage --html=C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\unit_test_report_20250922_183716.html --self-contained-html --json-report-file=C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\unit_test_report_20250922_183716.json --tb=short --strict-markers --disable-warnings",
+      "return_code": 1
+    },
+    "integration": {
+      "success": false,
+      "stdout": "",
+      "stderr": "C:\\Users\\a0922\\AppData\\Roaming\\uv\\python\\cpython-3.12.9-windows-x86_64-none\\python.exe: No module named pytest\n",
+      "total_tests": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "failures": [],
+      "test_type": "integration",
+      "duration": 0.03800225257873535,
+      "report_name": "integration_test_report_20250922_183716",
+      "command": "python -m pytest C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\tests\\integration -k test_*.py -m integration -v --cov=app --cov-report=html --cov-report=term-missing --cov-report=html:C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\integration_test_report_20250922_183716_coverage --html=C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\integration_test_report_20250922_183716.html --self-contained-html --json-report-file=C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\integration_test_report_20250922_183716.json --tb=short --strict-markers --disable-warnings",
+      "return_code": 1
+    },
+    "e2e": {
+      "success": false,
+      "stdout": "",
+      "stderr": "C:\\Users\\a0922\\AppData\\Roaming\\uv\\python\\cpython-3.12.9-windows-x86_64-none\\python.exe: No module named pytest\n",
+      "total_tests": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "failures": [],
+      "test_type": "e2e",
+      "duration": 0.03499937057495117,
+      "report_name": "e2e_test_report_20250922_183716",
+      "command": "python -m pytest C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\tests\\e2e -k test_*.py -m e2e -v --cov=app --cov-report=html --cov-report=term-missing --cov-report=html:C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\e2e_test_report_20250922_183716_coverage --html=C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\e2e_test_report_20250922_183716.html --self-contained-html --json-report-file=C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\e2e_test_report_20250922_183716.json --tb=short --strict-markers --disable-warnings",
+      "return_code": 1
+    }
+  }
+}

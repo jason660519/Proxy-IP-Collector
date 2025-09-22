@@ -12,6 +12,9 @@ import tempfile
 from pathlib import Path
 import sys
 import os
+import sqlite3
+import uuid
+from unittest.mock import AsyncMock as StdAsyncMock
 
 # 添加項目根目錄到Python路徑
 project_root = Path(__file__).parent.parent
@@ -96,6 +99,118 @@ def temp_db():
     yield db_path
     os.close(db_fd)
     os.unlink(db_path)
+
+@pytest.fixture
+def mock_db_connection():
+    """模擬數據庫連接fixture"""
+    mock_conn = StdAsyncMock()
+    mock_conn.execute.return_value = StdAsyncMock()
+    mock_conn.execute.return_value.fetchone.return_value = None
+    mock_conn.execute.return_value.fetchall.return_value = []
+    mock_conn.commit.return_value = None
+    mock_conn.rollback.return_value = None
+    mock_conn.close.return_value = None
+    
+    return mock_conn
+
+@pytest.fixture
+def mock_db_session():
+    """模擬數據庫會話fixture"""
+    class MockSession:
+        def __init__(self):
+            self.committed = False
+            self.rolled_back = False
+            self.closed = False
+            
+        async def __aenter__(self):
+            return self
+            
+        async def __aexit__(self, exc_type, exc_val, exc_tb):
+            await self.close()
+            
+        async def commit(self):
+            self.committed = True
+            
+        async def rollback(self):
+            self.rolled_back = True
+            
+        async def close(self):
+            self.closed = True
+            
+        def query(self, *args, **kwargs):
+            class MockQuery:
+                def filter(self, *args, **kwargs):
+                    return self
+                    
+                def all(self):
+                    return []
+                    
+                def first(self):
+                    return None
+                    
+                def count(self):
+                    return 0
+                    
+                def filter_by(self, **kwargs):
+                    return self
+            
+            return MockQuery()
+    
+    return MockSession()
+
+@pytest.fixture
+def isolated_test_db():
+    """隔離的測試數據庫fixture，確保測試之間不互相影響"""
+    import uuid
+    
+    # 創建唯一的測試數據庫文件名
+    test_db_name = f"test_{uuid.uuid4().hex}.db"
+    test_db_path = Path(tempfile.gettempdir()) / test_db_name
+    
+    # 創建測試數據庫
+    conn = sqlite3.connect(str(test_db_path))
+    
+    # 初始化數據庫表結構
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS proxies (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            host TEXT NOT NULL,
+            port INTEGER NOT NULL,
+            type TEXT NOT NULL,
+            username TEXT,
+            password TEXT,
+            status TEXT DEFAULT 'pending',
+            score REAL DEFAULT 0.0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS validation_results (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            proxy_id INTEGER,
+            is_valid BOOLEAN,
+            score REAL,
+            response_time REAL,
+            anonymity_level TEXT,
+            validation_time REAL,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (proxy_id) REFERENCES proxies (id)
+        )
+    """)
+    
+    conn.commit()
+    conn.close()
+    
+    yield str(test_db_path)
+    
+    # 清理測試數據庫
+    try:
+        os.unlink(str(test_db_path))
+    except FileNotFoundError:
+        pass
 
 class MockResponse:
     """模擬HTTP響應類"""

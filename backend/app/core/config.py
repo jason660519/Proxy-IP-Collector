@@ -2,7 +2,7 @@
 後端核心配置文件
 """
 from typing import List, Optional
-from pydantic import validator
+from pydantic import field_validator
 from pydantic_settings import BaseSettings
 import os
 from pathlib import Path
@@ -70,7 +70,8 @@ class Settings(BaseSettings):
     CACHE_TTL: int = 300  # 5分鐘
     PROXY_POOL_CACHE_KEY: str = "proxy:pool:active"
     
-    @validator("LOG_LEVEL")
+    @field_validator("LOG_LEVEL")
+    @classmethod
     def validate_log_level(cls, v):
         """驗證日誌級別"""
         valid_levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
@@ -78,7 +79,8 @@ class Settings(BaseSettings):
             raise ValueError(f"無效的日誌級別: {v}")
         return v.upper()
     
-    @validator("VALIDATOR_TARGET_URLS")
+    @field_validator("VALIDATOR_TARGET_URLS")
+    @classmethod
     def validate_target_urls(cls, v):
         """驗證目標URL格式"""
         urls = v.split(",")

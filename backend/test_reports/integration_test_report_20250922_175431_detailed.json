@@ -1,0 +1,16 @@
+{
+  "success": false,
+  "stdout": "",
+  "stderr": "C:\\Users\\a0922\\AppData\\Roaming\\uv\\python\\cpython-3.12.9-windows-x86_64-none\\python.exe: No module named pytest\n",
+  "total_tests": 0,
+  "passed": 0,
+  "failed": 0,
+  "skipped": 0,
+  "errors": 0,
+  "failures": [],
+  "test_type": "integration",
+  "duration": 0.038002729415893555,
+  "report_name": "integration_test_report_20250922_175431",
+  "command": "python -m pytest C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\tests\\integration -k test_*.py -m integration -v --html=C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\integration_test_report_20250922_175431.html --self-contained-html --json-report-file=C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\integration_test_report_20250922_175431.json --tb=short --strict-markers --disable-warnings",
+  "return_code": 1
+}

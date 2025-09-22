@@ -48,5 +48,65 @@
     "skipped": 0,
     "duration": 0.03501176834106445,
     "timestamp": "2025-09-22T14:42:52.440936"
+  },
+  {
+    "test_type": "unit",
+    "success": false,
+    "total_tests": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 0.04200148582458496,
+    "timestamp": "2025-09-22T17:54:31.899883"
+  },
+  {
+    "test_type": "integration",
+    "success": false,
+    "total_tests": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 0.038002729415893555,
+    "timestamp": "2025-09-22T17:54:31.942883"
+  },
+  {
+    "test_type": "e2e",
+    "success": false,
+    "total_tests": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 0.032999515533447266,
+    "timestamp": "2025-09-22T17:54:31.989885"
+  },
+  {
+    "test_type": "unit",
+    "success": false,
+    "total_tests": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 0.03700065612792969,
+    "timestamp": "2025-09-22T18:37:16.108284"
+  },
+  {
+    "test_type": "integration",
+    "success": false,
+    "total_tests": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 0.03800225257873535,
+    "timestamp": "2025-09-22T18:37:16.151286"
+  },
+  {
+    "test_type": "e2e",
+    "success": false,
+    "total_tests": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 0.03499937057495117,
+    "timestamp": "2025-09-22T18:37:16.202284"
   }
 ]

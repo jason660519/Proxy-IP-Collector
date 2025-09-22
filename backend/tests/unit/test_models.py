@@ -13,165 +13,153 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from app.models.proxy_models import (
-    ProxyModel, ProxyStatus, ProxyCreate, ProxyUpdate,
-    ProxyValidationResult, ProxyStatistics, ValidationJob
-)
-from app.models.validation_models import (
-    ValidationRequest, ValidationResponse, ValidationStatus,
-    ValidationLevel, ValidationConfig
-)
-
-
-class TestProxyModels:
+from app.schemas.proxy import ProxyStatus, ProxyCreate, ProxyUpdate, ProxyCheckResultResponse, ProxyStats, ProxyBase, ProxyValidationResponse
+class TestProxys:
     """代理模型測試類"""
     
     def test_proxy_model_creation_valid(self):
         """測試創建有效的代理模型"""
         proxy_data = {
-            "id": 1,
-            "host": "192.168.1.100",
+            "ip": "192.168.1.100",
             "port": 8080,
-            "type": "http",
-            "username": "test_user",
-            "password": "test_pass",
+            "protocol": "http",
             "status": ProxyStatus.ACTIVE,
-            "score": 85.0,
-            "created_at": datetime.now(),
-            "updated_at": datetime.now()
+            "response_time": 1000,
+            "success_rate": 0.85,
+            "quality_score": 0.85
         }
         
-        proxy = ProxyModel(**proxy_data)
+        proxy = ProxyBase(**proxy_data)
         
-        assert proxy.id == 1
-        assert proxy.host == "192.168.1.100"
+        assert proxy.ip == "192.168.1.100"
         assert proxy.port == 8080
-        assert proxy.type == "http"
+        assert proxy.protocol == "http"
         assert proxy.status == ProxyStatus.ACTIVE
-        assert proxy.score == 85.0
+        assert proxy.quality_score == 0.85
     
     def test_proxy_model_creation_invalid_port(self):
         """測試創建代理模型 - 無效端口"""
         proxy_data = {
-            "id": 1,
-            "host": "192.168.1.100",
+            "ip": "192.168.1.100",
             "port": 99999,  # 無效端口
-            "type": "http",
+            "protocol": "http",
             "status": ProxyStatus.ACTIVE,
-            "score": 85.0,
-            "created_at": datetime.now(),
-            "updated_at": datetime.now()
+            "response_time": 1000,
+            "success_rate": 0.85,
+            "quality_score": 0.85
         }
         
-        with pytest.raises(ValidationError):
-            ProxyModel(**proxy_data)
+        with pytest.raises(ValueError):
+            ProxyBase(**proxy_data)
     
     def test_proxy_model_creation_invalid_type(self):
         """測試創建代理模型 - 無效類型"""
         proxy_data = {
-            "id": 1,
-            "host": "192.168.1.100",
+            "ip": "192.168.1.100",
             "port": 8080,
-            "type": "invalid_type",  # 無效類型
+            "protocol": "invalid_type",  # 無效類型
             "status": ProxyStatus.ACTIVE,
-            "score": 85.0,
-            "created_at": datetime.now(),
-            "updated_at": datetime.now()
+            "response_time": 1000,
+            "success_rate": 0.85,
+            "quality_score": 0.85
         }
         
         with pytest.raises(ValidationError):
-            ProxyModel(**proxy_data)
+            ProxyBase(**proxy_data)
     
     def test_proxy_model_creation_invalid_score(self):
         """測試創建代理模型 - 無效評分"""
         proxy_data = {
-            "id": 1,
-            "host": "192.168.1.100",
+            "ip": "192.168.1.100",
             "port": 8080,
-            "type": "http",
+            "protocol": "http",
             "status": ProxyStatus.ACTIVE,
-            "score": 150.0,  # 無效評分（超過100）
-            "created_at": datetime.now(),
-            "updated_at": datetime.now()
+            "response_time": 1000,
+            "success_rate": 0.85,
+            "quality_score": 1.5  # 無效評分（超過1.0）
         }
         
         with pytest.raises(ValidationError):
-            ProxyModel(**proxy_data)
+            ProxyBase(**proxy_data)
     
     def test_proxy_create_model(self):
         """測試代理創建模型"""
         create_data = {
-            "host": "192.168.1.100",
+            "ip": "192.168.1.100",
             "port": 8080,
-            "type": "http",
-            "username": "test_user",
-            "password": "test_pass"
+            "protocol": "http",
+            "country": "US",
+            "city": "New York"
         }
         
         proxy_create = ProxyCreate(**create_data)
         
-        assert proxy_create.host == "192.168.1.100"
+        assert proxy_create.ip == "192.168.1.100"
         assert proxy_create.port == 8080
-        assert proxy_create.type == "http"
-        assert proxy_create.username == "test_user"
-        assert proxy_create.password == "test_pass"
+        assert proxy_create.protocol == "http"
+        assert proxy_create.country == "US"
+        assert proxy_create.city == "New York"
     
     def test_proxy_update_model(self):
         """測試代理更新模型"""
         update_data = {
             "status": ProxyStatus.INACTIVE,
-            "score": 90.0
+            "quality_score": 0.9
         }
         
         proxy_update = ProxyUpdate(**update_data)
         
         assert proxy_update.status == ProxyStatus.INACTIVE
-        assert proxy_update.score == 90.0
+        assert proxy_update.quality_score == 0.9
     
-    def test_proxy_validation_result_model(self):
-        """測試代理驗證結果模型"""
+    def test_proxy_check_result_response_model(self):
+        """測試代理檢查結果響應模型"""
+        from datetime import datetime
         result_data = {
-            "proxy": "192.168.1.100:8080",
-            "is_valid": True,
-            "score": 85.0,
-            "validation_details": {
-                "connection_test": "passed",
-                "speed_test": "passed",
-                "anonymity_test": "passed"
-            },
-            "validation_time": datetime.now()
+            "id": "result_123",
+            "proxy_id": "proxy_123",
+            "is_successful": True,
+            "response_time": 1500,
+            "error_message": None,
+            "check_type": "connection",
+            "target_url": "http://example.com",
+            "headers_sent": {"User-Agent": "test"},
+            "headers_received": {"Content-Type": "text/html"},
+            "status_code": 200,
+            "checked_at": datetime.now()
         }
         
-        validation_result = ProxyValidationResult(**result_data)
+        check_result = ProxyCheckResultResponse(**result_data)
         
-        assert validation_result.proxy == "192.168.1.100:8080"
-        assert validation_result.is_valid is True
-        assert validation_result.score == 85.0
-        assert "connection_test" in validation_result.validation_details
+        assert check_result.id == "result_123"
+        assert check_result.proxy_id == "proxy_123"
+        assert check_result.is_successful is True
+        assert check_result.response_time == 1500
+        assert check_result.status_code == 200
     
-    def test_proxy_statistics_model(self):
+    def test_proxy_stats_model(self):
         """測試代理統計模型"""
         stats_data = {
             "total_proxies": 1000,
             "active_proxies": 750,
             "inactive_proxies": 250,
-            "average_score": 75.5,
-            "success_rate": 0.75,
-            "by_type": {
-                "http": 600,
-                "https": 300,
-                "socks5": 100
-            }
+            "protocols": {"http": 600, "https": 300, "socks5": 100},
+            "countries": {"US": 300, "CN": 200, "EU": 500},
+            "anonymity_levels": {"transparent": 100, "anonymous": 400, "elite": 500},
+            "avg_response_time": 1500.0,
+            "avg_success_rate": 0.75,
+            "avg_quality_score": 0.8,
+            "last_updated": datetime.now()
         }
         
-        stats = ProxyStatistics(**stats_data)
+        stats = ProxyStats(**stats_data)
         
         assert stats.total_proxies == 1000
         assert stats.active_proxies == 750
-        assert stats.success_rate == 0.75
-        assert stats.by_type["http"] == 600
-        assert stats.by_type["https"] == 300
-        assert stats.by_type["socks5"] == 100
+        assert stats.avg_success_rate == 0.75
+        assert stats.protocols["http"] == 600
+        assert stats.protocols["https"] == 300
+        assert stats.protocols["socks5"] == 100
     
     def test_proxy_status_enum(self):
         """測試代理狀態枚舉"""
@@ -179,144 +167,23 @@ class TestProxyModels:
         valid_statuses = [
             ProxyStatus.ACTIVE,
             ProxyStatus.INACTIVE,
-            ProxyStatus.PENDING,
-            ProxyStatus.VALIDATING,
-            ProxyStatus.FAILED
+            ProxyStatus.UNKNOWN
         ]
         
         for status in valid_statuses:
             proxy_data = {
-                "id": 1,
-                "host": "192.168.1.100",
+                "ip": "192.168.1.100",
                 "port": 8080,
-                "type": "http",
+                "protocol": "http",
                 "status": status,
-                "score": 85.0,
-                "created_at": datetime.now(),
-                "updated_at": datetime.now()
+                "response_time": 1000,
+                "success_rate": 0.85,
+                "quality_score": 0.85
             }
             
-            proxy = ProxyModel(**proxy_data)
+            proxy = ProxyBase(**proxy_data)
             assert proxy.status == status
 
-
-class TestValidationModels:
-    """驗證模型測試類"""
-    
-    def test_validation_request_model(self):
-        """測試驗證請求模型"""
-        request_data = {
-            "proxy_ids": [1, 2, 3],
-            "validation_level": ValidationLevel.STANDARD
-        }
-        
-        request = ValidationRequest(**request_data)
-        
-        assert request.proxy_ids == [1, 2, 3]
-        assert request.validation_level == ValidationLevel.STANDARD
-    
-    def test_validation_response_model(self):
-        """測試驗證響應模型"""
-        response_data = {
-            "job_id": "test-job-123",
-            "status": ValidationStatus.RUNNING,
-            "message": "Validation started successfully"
-        }
-        
-        response = ValidationResponse(**response_data)
-        
-        assert response.job_id == "test-job-123"
-        assert response.status == ValidationStatus.RUNNING
-        assert response.message == "Validation started successfully"
-    
-    def test_validation_status_model(self):
-        """測試驗證狀態模型"""
-        status_data = {
-            "job_id": "test-job-123",
-            "status": ValidationStatus.COMPLETED,
-            "progress": 100,
-            "total_proxies": 10,
-            "processed_proxies": 10,
-            "valid_proxies": 8,
-            "invalid_proxies": 2,
-            "estimated_completion": datetime.now()
-        }
-        
-        status = ValidationStatus(**status_data)
-        
-        assert status.job_id == "test-job-123"
-        assert status.status == ValidationStatus.COMPLETED
-        assert status.progress == 100
-        assert status.total_proxies == 10
-        assert status.valid_proxies == 8
-        assert status.invalid_proxies == 2
-    
-    def test_validation_level_enum(self):
-        """測試驗證級別枚舉"""
-        # 測試所有有效的驗證級別
-        valid_levels = [
-            ValidationLevel.BASIC,
-            ValidationLevel.STANDARD,
-            ValidationLevel.COMPREHENSIVE
-        ]
-        
-        for level in valid_levels:
-            config_data = {"validation_level": level}
-            config = ValidationConfig(**config_data)
-            assert config.validation_level == level
-    
-    def test_validation_config_model(self):
-        """測試驗證配置模型"""
-        config_data = {
-            "validation_level": ValidationLevel.COMPREHENSIVE,
-            "timeout_seconds": 30,
-            "retry_attempts": 3,
-            "concurrent_limit": 10
-        }
-        
-        config = ValidationConfig(**config_data)
-        
-        assert config.validation_level == ValidationLevel.COMPREHENSIVE
-        assert config.timeout_seconds == 30
-        assert config.retry_attempts == 3
-        assert config.concurrent_limit == 10
-    
-    def test_validation_config_model_defaults(self):
-        """測試驗證配置模型默認值"""
-        config_data = {
-            "validation_level": ValidationLevel.STANDARD
-        }
-        
-        config = ValidationConfig(**config_data)
-        
-        assert config.validation_level == ValidationLevel.STANDARD
-        assert config.timeout_seconds == 10  # 默認值
-        assert config.retry_attempts == 2    # 默認值
-        assert config.concurrent_limit == 5  # 默認值
-    
-    def test_validation_job_model(self):
-        """測試驗證任務模型"""
-        job_data = {
-            "id": 1,
-            "job_id": "test-job-123",
-            "validation_level": ValidationLevel.STANDARD,
-            "status": ValidationStatus.RUNNING,
-            "total_proxies": 100,
-            "processed_proxies": 50,
-            "created_at": datetime.now(),
-            "started_at": datetime.now(),
-            "completed_at": None
-        }
-        
-        job = ValidationJob(**job_data)
-        
-        assert job.id == 1
-        assert job.job_id == "test-job-123"
-        assert job.validation_level == ValidationLevel.STANDARD
-        assert job.status == ValidationStatus.RUNNING
-        assert job.total_proxies == 100
-        assert job.processed_proxies == 50
-        assert job.completed_at is None
 
 
 class TestModelSerialization:
@@ -325,40 +192,37 @@ class TestModelSerialization:
     def test_proxy_model_to_dict(self):
         """測試代理模型轉換為字典"""
         proxy_data = {
-            "id": 1,
-            "host": "192.168.1.100",
+            "ip": "192.168.1.100",
             "port": 8080,
-            "type": "http",
+            "protocol": "http",
             "status": ProxyStatus.ACTIVE,
-            "score": 85.0,
-            "created_at": datetime.now(),
-            "updated_at": datetime.now()
+            "response_time": 1000,
+            "success_rate": 0.85,
+            "quality_score": 0.85
         }
         
-        proxy = ProxyModel(**proxy_data)
+        proxy = ProxyBase(**proxy_data)
         proxy_dict = proxy.model_dump()
         
-        assert proxy_dict["id"] == 1
-        assert proxy_dict["host"] == "192.168.1.100"
+        assert proxy_dict["ip"] == "192.168.1.100"
         assert proxy_dict["port"] == 8080
-        assert proxy_dict["type"] == "http"
+        assert proxy_dict["protocol"] == "http"
         assert proxy_dict["status"] == ProxyStatus.ACTIVE
-        assert proxy_dict["score"] == 85.0
+        assert proxy_dict["success_rate"] == 0.85
     
     def test_proxy_model_json_serialization(self):
         """測試代理模型JSON序列化"""
         proxy_data = {
-            "id": 1,
-            "host": "192.168.1.100",
+            "ip": "192.168.1.100",
             "port": 8080,
-            "type": "http",
+            "protocol": "http",
             "status": ProxyStatus.ACTIVE,
-            "score": 85.0,
-            "created_at": datetime.now(),
-            "updated_at": datetime.now()
+            "response_time": 1000,
+            "success_rate": 0.85,
+            "quality_score": 0.85
         }
         
-        proxy = ProxyModel(**proxy_data)
+        proxy = ProxyBase(**proxy_data)
         json_str = proxy.model_dump_json()
         
         assert isinstance(json_str, str)
@@ -369,23 +233,21 @@ class TestModelSerialization:
     def test_validation_result_model_serialization(self):
         """測試驗證結果模型序列化"""
         result_data = {
-            "proxy": "192.168.1.100:8080",
-            "is_valid": True,
-            "score": 85.0,
-            "validation_details": {
-                "connection_test": "passed",
-                "speed_test": "passed"
-            },
-            "validation_time": datetime.now()
+            "total_tested": 10,
+            "successful": 8,
+            "failed": 2,
+            "results": [],
+            "duration": 300,
+            "started_at": datetime.now(),
+            "completed_at": datetime.now()
         }
         
-        result = ProxyValidationResult(**result_data)
+        result = ProxyValidationResponse(**result_data)
         result_dict = result.model_dump()
         
-        assert result_dict["proxy"] == "192.168.1.100:8080"
-        assert result_dict["is_valid"] is True
-        assert result_dict["score"] == 85.0
-        assert "connection_test" in result_dict["validation_details"]
+        assert result_dict["total_tested"] == 10
+        assert result_dict["successful"] == 8
+        assert result_dict["failed"] == 2
 
 
 if __name__ == "__main__":
