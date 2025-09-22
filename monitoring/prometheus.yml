@@ -1,0 +1,41 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alert_rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  # 後端應用監控
+  - job_name: 'proxy-collector-backend'
+    static_configs:
+      - targets: ['backend:8000']
+    metrics_path: '/monitoring/metrics'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+  # Prometheus自身監控
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # 節點監控（如果安裝了node_exporter）
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # Redis監控
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+
+  # PostgreSQL監控
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']

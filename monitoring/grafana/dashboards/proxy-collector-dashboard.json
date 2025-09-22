@@ -1,0 +1,466 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "代理收集器監控儀表板",
+    "tags": ["proxy-collector", "monitoring", "production"],
+    "timezone": "browser",
+    "refresh": "30s",
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "系統概覽",
+        "type": "row",
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": 2,
+        "title": "CPU使用率",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "system_cpu_usage_percent",
+            "legendFormat": "CPU使用率",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 70
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
+            "unit": "percent"
+          }
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 6,
+          "x": 0,
+          "y": 1
+        }
+      },
+      {
+        "id": 3,
+        "title": "內存使用率",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "system_memory_usage_percent",
+            "legendFormat": "內存使用率",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 70
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
+            "unit": "percent"
+          }
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 6,
+          "x": 6,
+          "y": 1
+        }
+      },
+      {
+        "id": 4,
+        "title": "磁盤使用率",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "system_disk_usage_percent",
+            "legendFormat": "磁盤使用率",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "yellow",
+                  "value": 80
+                },
+                {
+                  "color": "red",
+                  "value": 95
+                }
+              ]
+            },
+            "unit": "percent"
+          }
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 6,
+          "x": 12,
+          "y": 1
+        }
+      },
+      {
+        "id": 5,
+        "title": "應用程序運行時間",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "application_uptime_seconds",
+            "legendFormat": "運行時間",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "mappings": [],
+            "unit": "s"
+          }
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 6,
+          "x": 18,
+          "y": 1
+        }
+      },
+      {
+        "id": 6,
+        "title": "HTTP請求統計",
+        "type": "row",
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 5
+        }
+      },
+      {
+        "id": 7,
+        "title": "HTTP請求總數",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total[5m])",
+            "legendFormat": "{{method}} {{endpoint}} {{status_code}}",
+            "refId": "A"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "請求/秒",
+            "min": 0
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 6
+        }
+      },
+      {
+        "id": 8,
+        "title": "HTTP響應時間",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "50th percentile",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "95th percentile",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "99th percentile",
+            "refId": "C"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "秒",
+            "min": 0
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 6
+        }
+      },
+      {
+        "id": 9,
+        "title": "代理統計",
+        "type": "row",
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 14
+        }
+      },
+      {
+        "id": 10,
+        "title": "代理數量分布",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "proxy_count_total",
+            "legendFormat": "{{status}}",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 0,
+          "y": 15
+        }
+      },
+      {
+        "id": 11,
+        "title": "活躍代理趨勢",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "proxy_count_total{status=\"active\"}",
+            "legendFormat": "活躍代理",
+            "refId": "A"
+          },
+          {
+            "expr": "proxy_count_total{status=\"inactive\"}",
+            "legendFormat": "非活躍代理",
+            "refId": "B"
+          },
+          {
+            "expr": "proxy_count_total{status=\"failed\"}",
+            "legendFormat": "失敗代理",
+            "refId": "C"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "數量",
+            "min": 0
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 16,
+          "x": 8,
+          "y": 15
+        }
+      },
+      {
+        "id": 12,
+        "title": "健康檢查與數據庫",
+        "type": "row",
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 23
+        }
+      },
+      {
+        "id": 13,
+        "title": "健康檢查狀態",
+        "type": "table",
+        "targets": [
+          {
+            "expr": "health_check_status",
+            "legendFormat": "{{component}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "displayMode": "auto"
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "red",
+                    "index": 0,
+                    "text": "不健康"
+                  },
+                  "1": {
+                    "color": "green",
+                    "index": 1,
+                    "text": "健康"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "green",
+                  "value": 1
+                }
+              ]
+            }
+          }
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 24
+        }
+      },
+      {
+        "id": 14,
+        "title": "數據庫連接數",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "database_connections_total",
+            "legendFormat": "{{database_type}}",
+            "refId": "A"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "連接數",
+            "min": 0
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 24
+        }
+      },
+      {
+        "id": 15,
+        "title": "錯誤與告警",
+        "type": "row",
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 32
+        }
+      },
+      {
+        "id": 16,
+        "title": "應用程序錯誤",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(application_errors_total[5m])",
+            "legendFormat": "{{error_type}}",
+            "refId": "A"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "錯誤/秒",
+            "min": 0
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 33
+        }
+      },
+      {
+        "id": 17,
+        "title": "活動連接數",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "active_connections",
+            "legendFormat": "活動連接",
+            "refId": "A"
+          }
+        ],
+        "yAxes": [
+          {
+            "label": "連接數",
+            "min": 0
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 33
+        }
+      }
+    ]
+  }
+}

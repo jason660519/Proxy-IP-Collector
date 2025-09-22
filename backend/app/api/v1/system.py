@@ -11,7 +11,7 @@ from pathlib import Path
 
 from app.core.config import settings
 from app.core.logging import get_logger
-from app.core.database import get_db_session
+from app.core.database_manager import get_db_session_manager, get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 
 logger = get_logger(__name__)

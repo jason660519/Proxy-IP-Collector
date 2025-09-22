@@ -1,0 +1,64 @@
+{
+  "timestamp": "2025-09-22T09:45:07.522806",
+  "tests": {
+    "Database Connection": {
+      "passed": false,
+      "message": "Database connection test failed",
+      "error": "unable to open database file",
+      "timestamp": "2025-09-22T09:45:07.522806"
+    },
+    "Redis Connection": {
+      "passed": false,
+      "message": "Redis connection failed",
+      "error": "Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.",
+      "timestamp": "2025-09-22T09:45:11.603738"
+    },
+    "Application API": {
+      "passed": false,
+      "message": "Application API test failed",
+      "error": "",
+      "timestamp": "2025-09-22T09:45:22.219083"
+    },
+    "Prometheus": {
+      "passed": false,
+      "message": "Prometheus connection failed",
+      "error": "HTTPConnectionPool(host='localhost', port=9090): Max retries exceeded with url: /-/healthy (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002096746A8A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-09-22T09:45:26.320153"
+    },
+    "Grafana": {
+      "passed": false,
+      "message": "Grafana connection failed",
+      "error": "HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /api/health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000020965AE9640>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "timestamp": "2025-09-22T09:45:30.446082"
+    },
+    "Proxy Functionality": {
+      "passed": false,
+      "message": "Proxy functionality test failed",
+      "error": "",
+      "timestamp": "2025-09-22T09:45:41.227355"
+    },
+    "Metrics Collection": {
+      "passed": false,
+      "message": "Metrics collection test failed",
+      "error": "",
+      "timestamp": "2025-09-22T09:45:52.217703"
+    },
+    "Performance Baseline": {
+      "passed": false,
+      "message": "Performance baseline test failed",
+      "error": "",
+      "timestamp": "2025-09-22T09:46:02.230036"
+    }
+  },
+  "summary": {
+    "total": 8,
+    "passed": 0,
+    "failed": 8,
+    "errors": [
+      "Database Connection: unable to open database file",
+      "Redis Connection: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.",
+      "Prometheus: HTTPConnectionPool(host='localhost', port=9090): Max retries exceeded with url: /-/healthy (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002096746A8A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "Grafana: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /api/health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000020965AE9640>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+    ]
+  }
+}

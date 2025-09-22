@@ -1,0 +1,19 @@
+app_name: proxy-collector
+cors_origins:
+- '*'
+database_url: sqlite:///./proxy_collector.db
+debug: false
+host: 0.0.0.0
+log_format: json
+log_level: INFO
+max_concurrent_requests: 10
+port: 8000
+proxy_test_timeout: 10
+proxy_test_urls:
+- http://httpbin.org/ip
+rate_limit_enabled: true
+rate_limit_requests_per_minute: 60
+redis_url: redis://localhost:6379
+request_timeout: 30
+retry_attempts: 3
+secret_key: your-secret-key-here

@@ -1,0 +1,173 @@
+name: 部署代理收集器
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11, 3.12]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: 設置Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: 安裝uv
+      run: |
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+    - name: 安裝依賴
+      run: |
+        cd backend
+        uv venv
+        uv pip install -e .
+        uv pip install pytest pytest-cov
+
+    - name: 運行測試
+      run: |
+        cd backend
+        uv run pytest tests/ -v --cov=app --cov-report=xml
+
+    - name: 上傳覆蓋率報告
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./backend/coverage.xml
+
+  build-and-push:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - name: 檢出代碼
+      uses: actions/checkout@v4
+
+    - name: 登錄到容器註冊表
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 提取元數據
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable={{is_default_branch}}
+
+    - name: 構建和推送後端鏡像
+      uses: docker/build-push-action@v5
+      with:
+        context: ./backend
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: 構建和推送前端鏡像（如果有前端代碼）
+      if: hashFiles('frontend-react/') != ''
+      uses: docker/build-push-action@v5
+      with:
+        context: ./frontend-react
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend:${{ github.sha }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - name: 檢出代碼
+      uses: actions/checkout@v4
+
+    - name: 部署到服務器
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+      run: |
+        # 設置SSH
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+        chmod 600 ~/.ssh/deploy_key
+        
+        # 部署到服務器
+        ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -p $REMOTE_PORT $REMOTE_USER@$REMOTE_HOST << 'EOF'
+          cd /opt/proxy-collector
+          git pull origin main
+          
+          # 更新Docker鏡像
+          docker-compose pull
+          
+          # 重新部署
+          docker-compose down
+          docker-compose up -d
+          
+          # 健康檢查
+          sleep 30
+          curl -f http://localhost:8000/monitoring/health || exit 1
+          
+          echo "✅ 部署成功！"
+        EOF
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 檢出代碼
+      uses: actions/checkout@v4
+
+    - name: 運行Trivy安全掃描
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+
+    - name: 上傳安全掃描結果
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+  notify:
+    needs: [test, build-and-push, deploy]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+    - name: 發送部署通知
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        channel: '#deployments'
+        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}

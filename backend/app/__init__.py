@@ -2,7 +2,7 @@
 應用程序模組
 """
 from app.api import v1_router
-from app.core import config, database, logging, exceptions
+from app.core import config, database_manager, logging, exceptions
 from app.models import proxy
 from app.schemas import proxy as proxy_schemas
 from app.services import proxy_validator
@@ -15,7 +15,7 @@ __all__ = [
     
     # 核心
     "config",
-    "database", 
+    "database_manager", 
     "logging",
     "exceptions",
     

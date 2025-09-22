@@ -1,0 +1,82 @@
+groups:
+  - name: proxy_collector_alerts
+    rules:
+      # 服務可用性告警
+      - alert: ServiceDown
+        expr: up{job="proxy-collector-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "代理收集器服務不可用"
+          description: "代理收集器服務已經停止運行超過1分鐘"
+
+      # 高CPU使用率告警
+      - alert: HighCPUUsage
+        expr: rate(process_cpu_seconds_total{job="proxy-collector-backend"}[5m]) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "CPU使用率過高"
+          description: "服務CPU使用率超過80%，持續5分鐘"
+
+      # 高內存使用率告警
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes{job="proxy-collector-backend"} / 1024 / 1024 > 500
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "內存使用率過高"
+          description: "服務內存使用超過500MB，持續5分鐘"
+
+      # 磁盤空間告警
+      - alert: DiskSpaceLow
+        expr: disk_usage_percent > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "磁盤空間不足"
+          description: "磁盤使用率超過85%，當前使用率{{ $value }}%"
+
+      # 請求錯誤率告警
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{job="proxy-collector-backend",status=~"5.."}[5m]) / rate(http_requests_total{job="proxy-collector-backend"}[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "請求錯誤率過高"
+          description: "HTTP 5xx錯誤率超過10%，持續5分鐘"
+
+      # 響應時間告警
+      - alert: SlowResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="proxy-collector-backend"}[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "響應時間過慢"
+          description: "95%的請求響應時間超過2秒，持續5分鐘"
+
+      # 代理池告警
+      - alert: ProxyPoolLow
+        expr: proxy_pool_size < 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "代理池數量過低"
+          description: "可用代理數量少於10個，當前數量{{ $value }}"
+
+      # 數據庫連接告警
+      - alert: DatabaseConnectionFailed
+        expr: database_connection_status == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "數據庫連接失敗"
+          description: "無法連接到數據庫，持續1分鐘"

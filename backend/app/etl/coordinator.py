@@ -10,7 +10,7 @@ from app.etl.extractors.base import BaseExtractor, ExtractResult
 from app.etl.extractors.factory import extractor_factory
 from app.core.logging import get_logger
 from app.core.exceptions import FetcherException
-from app.core.database import get_db_session
+from app.core.database_manager import get_db_session_manager
 from app.models.proxy import Proxy, ProxyCrawlLog
 from app.schemas.proxy import ProxyCreate
 from sqlalchemy import select
@@ -240,7 +240,7 @@ class ExtractionCoordinator:
         saved_count = 0
         
         try:
-            async with get_db_session() as session:
+            async with get_db_session_manager() as session:
                 for proxy_data in proxies_data:
                     try:
                         # 檢查是否已存在
@@ -287,7 +287,7 @@ class ExtractionCoordinator:
             results: 提取結果列表
         """
         try:
-            async with get_db_session() as session:
+            async with get_db_session_manager() as session:
                 for result in results:
                     if isinstance(result, Exception):
                         continue

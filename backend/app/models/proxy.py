@@ -4,18 +4,28 @@
 from datetime import datetime
 from typing import Optional, Dict, Any
 from sqlalchemy import Column, String, Integer, Float, DateTime, Boolean, JSON, Index, Text
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
+import os
 
 Base = declarative_base()
+
+# 根據數據庫類型選擇合適的UUID列類型
+database_type = os.getenv('DATABASE_TYPE', 'sqlite').lower()
+
+if database_type == 'postgresql':
+    from sqlalchemy.dialects.postgresql import UUID as PG_UUID
+    UUIDType = PG_UUID(as_uuid=True)
+else:
+    # SQLite使用TEXT存儲UUID字符串
+    UUIDType = String(36)
 
 
 class Proxy(Base):
     """代理IP實體模型"""
     __tablename__ = "proxies"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(UUIDType, primary_key=True, default=lambda: str(uuid.uuid4()))
     ip = Column(String(45), nullable=False, index=True, comment="IP地址")
     port = Column(Integer, nullable=False, comment="端口號")
     protocol = Column(String(10), nullable=False, index=True, comment="協議類型")
@@ -47,7 +57,7 @@ class ProxySource(Base):
     """代理來源配置"""
     __tablename__ = "proxy_sources"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(UUIDType, primary_key=True, default=lambda: str(uuid.uuid4()))
     name = Column(String(100), unique=True, nullable=False, comment="來源名稱")
     source_type = Column(String(50), nullable=False, comment="來源類型")
     config = Column(JSON, default=dict, comment="來源配置")
@@ -64,8 +74,8 @@ class ProxyCheckResult(Base):
     """代理檢查結果"""
     __tablename__ = "proxy_check_results"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    proxy_id = Column(UUID(as_uuid=True), nullable=False, index=True)
+    id = Column(UUIDType, primary_key=True, default=lambda: str(uuid.uuid4()))
+    proxy_id = Column(UUIDType, nullable=False, index=True)
     is_successful = Column(Boolean, nullable=False, comment="是否成功")
     response_time = Column(Integer, comment="響應時間")
     error_message = Column(Text, comment="錯誤信息")
@@ -86,7 +96,7 @@ class ProxyCrawlLog(Base):
     """代理爬取日誌"""
     __tablename__ = "proxy_crawl_logs"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(UUIDType, primary_key=True, default=lambda: str(uuid.uuid4()))
     source = Column(String(100), nullable=False, index=True, comment="來源")
     total_found = Column(Integer, default=0, comment="總共找到數量")
     success = Column(Boolean, nullable=False, comment="是否成功")
@@ -104,7 +114,7 @@ class ETLTask(Base):
     """ETL任務記錄"""
     __tablename__ = "etl_tasks"
     
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(UUIDType, primary_key=True, default=lambda: str(uuid.uuid4()))
     task_type = Column(String(50), nullable=False, index=True, comment="任務類型")
     status = Column(String(20), default="pending", index=True, comment="任務狀態")
     parameters = Column(JSON, default=dict, comment="任務參數")

@@ -180,6 +180,28 @@ class UnifiedServer:
             
             return health_status
         
+        # 系統信息端點
+        @self.app.get("/info")
+        async def system_info():
+            """系統信息端點"""
+            import platform
+            import sys
+            from datetime import datetime
+            
+            return {
+                "platform": platform.platform(),
+                "python_version": platform.python_version(),
+                "app_version": settings.APP_VERSION,
+                "mode": self.mode,
+                "system": {
+                    "platform": platform.system(),
+                    "architecture": platform.architecture(),
+                    "processor": platform.processor(),
+                    "python_implementation": platform.python_implementation()
+                },
+                "timestamp": datetime.now().isoformat()
+            }
+        
         # 根據模式註冊不同的API路由
         if self.mode in ["full", "api"]:
             # 註冊完整API路由 (v1_router已經有/api/v1前綴，不需要再次添加)

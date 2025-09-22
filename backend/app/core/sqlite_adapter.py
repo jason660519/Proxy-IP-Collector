@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class SQLiteAdapter:
     """SQLite數據庫適配器"""
     
-    def __init__(self, db_path: str = None):
+    def __init__(self, db_path: str = None, echo: bool = False):
         # 使用絕對路徑，默認在項目根目錄的data文件夾
         if db_path is None:
             # 獲取當前文件的絕對路徑，然後找到項目根目錄
@@ -31,6 +31,7 @@ class SQLiteAdapter:
         # 確保數據目錄存在
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self._connection = None
+        self.echo = echo  # 日誌回顯設置
         
     def get_connection(self) -> sqlite3.Connection:
         """獲取數據庫連接"""
@@ -60,6 +61,12 @@ class SQLiteAdapter:
         """執行SQL查詢"""
         conn = self.get_connection()
         cursor = conn.cursor()
+        
+        # 日誌回顯
+        if self.echo:
+            logger.info(f"執行SQL: {query}")
+            if params:
+                logger.info(f"參數: {params}")
         
         try:
             if params:
@@ -145,9 +152,9 @@ class SQLiteAdapter:
 class AsyncSQLiteAdapter:
     """異步SQLite適配器"""
     
-    def __init__(self, db_path: str = None):
+    def __init__(self, db_path: str = None, echo: bool = False):
         # 使用與同步適配器相同的邏輯
-        self.sync_adapter = SQLiteAdapter(db_path)
+        self.sync_adapter = SQLiteAdapter(db_path, echo=echo)
     
     async def execute(self, query: str, params: tuple = None) -> sqlite3.Cursor:
         """異步執行SQL查詢"""
@@ -183,6 +190,10 @@ class AsyncSQLiteAdapter:
         """異步關閉連接"""
         loop = asyncio.get_event_loop()
         await loop.run_in_executor(None, self.sync_adapter.close)
+    
+    async def dispose(self):
+        """異步釋放資源"""
+        await self.close()
 
 
 # 代理數據庫操作類

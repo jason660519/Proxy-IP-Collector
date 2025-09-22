@@ -1,0 +1,16 @@
+{
+  "success": false,
+  "stdout": "",
+  "stderr": "C:\\Users\\a0922\\AppData\\Roaming\\uv\\python\\cpython-3.12.9-windows-x86_64-none\\python.exe: No module named pytest\n",
+  "total_tests": 0,
+  "passed": 0,
+  "failed": 0,
+  "skipped": 0,
+  "errors": 0,
+  "failures": [],
+  "test_type": "e2e",
+  "duration": 0.03300142288208008,
+  "report_name": "e2e_test_report_20250922_100406",
+  "command": "python -m pytest C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\tests\\e2e -k test_*.py -m e2e -v --cov=app --cov-report=html --cov-report=term-missing --cov-report=html:C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\e2e_test_report_20250922_100406_coverage --html=C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\e2e_test_report_20250922_100406.html --self-contained-html --json-report-file=C:\\Users\\a0922\\OneDrive\\Desktop\\My Proxy Collector\\backend\\test_reports\\e2e_test_report_20250922_100406.json --tb=short --strict-markers --disable-warnings",
+  "return_code": 1
+}

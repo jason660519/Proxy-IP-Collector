@@ -57,16 +57,14 @@ class ServiceLauncher:
         logger.info(f"開始初始化應用 - 模式: {mode}")
         
         # 記錄啟動時間
-        self.start_time = asyncio.get_event_loop().time()
+        import time
+        self.start_time = time.time()
         
         # 設置配置
         self.config = await setup_config()
         
         # 設置日誌
-        setup_logging(
-            level=self.config.get("log_level", "INFO"),
-            format_type=self.config.get("log_format", "json")
-        )
+        setup_logging()  # 使用默認配置
         
         # 創建應用
         self.app = self._create_app(mode)
@@ -146,12 +144,14 @@ class ServiceLauncher:
         async def system_info():
             """系統信息端點"""
             import platform
+            # 獲取配置信息（同步函數，無需await）
+            config_info = config_manager.get_config_info()
             return {
                 "platform": platform.platform(),
                 "python_version": platform.python_version(),
                 "app_version": "1.0.0",
                 "mode": "full",
-                "config_info": config_manager.get_config_info()
+                "config_info": config_info
             }
     
     def _setup_api_mode(self, app: FastAPI):
@@ -311,7 +311,8 @@ class ServiceLauncher:
     def get_uptime(self) -> float:
         """獲取運行時間"""
         if self.start_time:
-            return asyncio.get_event_loop().time() - self.start_time
+            import time
+            return time.time() - self.start_time
         return 0.0
     
     async def run(self, host: str = "0.0.0.0", port: int = 8000, 

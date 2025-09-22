@@ -9,7 +9,7 @@ from datetime import datetime
 from app.etl.coordinator import get_coordinator, ExtractionCoordinator
 from app.etl.extractors.factory import extractor_factory
 from app.core.logging import get_logger
-from app.core.database import get_db_session
+from app.core.database_manager import get_db_session_manager, get_db
 from app.models.proxy import ProxyCrawlLog
 from sqlalchemy import select, desc
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -202,7 +202,7 @@ async def get_crawl_history(
     offset: int = 0,
     source: Optional[str] = None,
     success: Optional[bool] = None,
-    db: AsyncSession = Depends(get_db_session),
+    db: AsyncSession = Depends(get_db),
 ) -> List[CrawlHistory]:
     """
     獲取爬取歷史
@@ -218,7 +218,7 @@ async def get_crawl_history(
         List[CrawlHistory]: 爬取歷史列表
     """
     try:
-        query = select(ProxyCrawlLog).order_by(desc(ProxyCrawlLog.created_at))
+        query = select(ProxyCrawlLog).order_by(desc(ProxyCrawlLog.crawled_at))
         
         if source:
             query = query.where(ProxyCrawlLog.source == source)
@@ -238,7 +238,7 @@ async def get_crawl_history(
                 total_found=log.total_found,
                 success=log.success,
                 error_message=log.error_message,
-                created_at=log.created_at,
+                created_at=log.crawled_at,
                 metadata=log.extra_metadata,
             )
             for log in logs

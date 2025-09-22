@@ -8,7 +8,7 @@ from datetime import datetime
 from sqlalchemy import select, desc, func, and_, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.database import get_db_session
+from app.core.database_manager import get_db_session_manager, get_db
 from app.core.logging import get_logger
 from app.models.proxy import Proxy, ProxySource
 from app.schemas.proxy import ProxyResponse, ProxyFilter, ProtocolType, AnonymityLevel
@@ -43,7 +43,7 @@ class ProxyListResponse(BaseModel):
 
 
 
-@router.get("", response_model=ProxyListResponse)
+@router.get("/list", response_model=ProxyListResponse)
 async def get_proxies(
     page: int = Query(1, ge=1, description="頁碼"),
     page_size: int = Query(20, ge=1, le=100, description="每頁數量"),
@@ -54,7 +54,7 @@ async def get_proxies(
     source: Optional[str] = Query(None, description="來源篩選"),
     min_response_time: Optional[float] = Query(None, description="最小響應時間篩選"),
     max_response_time: Optional[float] = Query(None, description="最大響應時間篩選"),
-    db: AsyncSession = Depends(get_db_session),
+    db: AsyncSession = Depends(get_db),
 ) -> ProxyListResponse:
     """
     獲取代理列表
@@ -83,7 +83,7 @@ async def get_proxies(
             query = query.where(Proxy.protocol == protocol)
         
         if anonymity_level:
-            query = query.where(Proxy.anonymity_level == anonymity_level)
+            query = query.where(Proxy.anonymity == anonymity_level)
         
         if country:
             query = query.where(Proxy.country == country)
@@ -107,7 +107,7 @@ async def get_proxies(
         
         # 獲取分頁數據
         offset = (page - 1) * page_size
-        query = query.order_by(desc(Proxy.created_at)).offset(offset).limit(page_size)
+        query = query.order_by(desc(Proxy.last_checked)).offset(offset).limit(page_size)
         
         result = await db.execute(query)
         proxies = result.scalars().all()
@@ -132,8 +132,8 @@ async def get_proxies(
 
 @router.get("/{proxy_id}", response_model=ProxyResponse)
 async def get_proxy(
-    proxy_id: int,
-    db: AsyncSession = Depends(get_db_session),
+    proxy_id: str,
+    db: AsyncSession = Depends(get_db),
 ) -> ProxyResponse:
     """
     獲取單個代理詳情
@@ -163,8 +163,8 @@ async def get_proxy(
 
 @router.delete("/{proxy_id}")
 async def delete_proxy(
-    proxy_id: int,
-    db: AsyncSession = Depends(get_db_session),
+    proxy_id: str,
+    db: AsyncSession = Depends(get_db),
 ) -> Dict[str, Any]:
     """
     刪除代理
@@ -201,7 +201,7 @@ async def delete_proxy(
 
 
 @router.get("/stats", response_model=ProxyStats)
-async def get_proxy_stats(db: AsyncSession = Depends(get_db_session)) -> ProxyStats:
+async def get_proxy_stats(db: AsyncSession = Depends(get_db)) -> ProxyStats:
     """
     獲取代理統計信息
     
@@ -237,7 +237,7 @@ async def get_proxy_stats(db: AsyncSession = Depends(get_db_session)) -> ProxySt
         # 按匿名度統計
         anonymity_stats = {}
         try:
-            anonymity_query = select(Proxy.anonymity_level, func.count()).group_by(Proxy.anonymity_level)
+            anonymity_query = select(Proxy.anonymity, func.count()).group_by(Proxy.anonymity)
             anonymity_result = await db.execute(anonymity_query)
             for anonymity, count in anonymity_result:
                 if anonymity and anonymity != "None" and str(anonymity).strip():
@@ -293,8 +293,8 @@ async def get_proxy_stats(db: AsyncSession = Depends(get_db_session)) -> ProxySt
 
 @router.post("/{proxy_id}/validate")
 async def validate_proxy(
-    proxy_id: int,
-    db: AsyncSession = Depends(get_db_session),
+    proxy_id: str,
+    db: AsyncSession = Depends(get_db),
 ) -> Dict[str, Any]:
     """
     驗證代理
@@ -319,7 +319,7 @@ async def validate_proxy(
         
         # 更新代理狀態
         proxy.is_active = is_valid
-        proxy.last_verified = datetime.utcnow()
+        proxy.last_checked = datetime.utcnow()
         proxy.updated_at = datetime.utcnow()
         
         await db.commit()
@@ -342,7 +342,7 @@ async def get_random_proxy(
     protocol: Optional[ProtocolType] = Query(None, description="協議篩選"),
     anonymity_level: Optional[AnonymityLevel] = Query(None, description="匿名度篩選"),
     country: Optional[str] = Query(None, description="國家篩選"),
-    db: AsyncSession = Depends(get_db_session),
+    db: AsyncSession = Depends(get_db),
 ) -> ProxyResponse:
     """
     獲取隨機代理
@@ -363,7 +363,7 @@ async def get_random_proxy(
             query = query.where(Proxy.protocol == protocol)
         
         if anonymity_level:
-            query = query.where(Proxy.anonymity_level == anonymity_level)
+            query = query.where(Proxy.anonymity == anonymity_level)
         
         if country:
             query = query.where(Proxy.country == country)
